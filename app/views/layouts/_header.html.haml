@@ -1,0 +1,8 @@
+%header.main
+  .container
+    %ul
+      %li#logo
+      - if logged_in?
+        %li= link_to 'Logout', logout_path, method: :delete
+      - else
+        %li= link_to 'Login', login_path

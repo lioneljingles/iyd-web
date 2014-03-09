@@ -1,0 +1,115 @@
+$bodyFontFamily: Roboto, 'Helvetica Neue', helvetica, arial, sans-serif;
+$titleFontFamily: Sanchez, Georgia, serif;
+
+body {
+  font: normal normal 1.0em/1.4em $bodyFontFamily;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  color: $textGray;
+}
+
+h1, h2, h3, h4, h5, h6, form label, .btn {
+  font-family: $titleFontFamily;
+  font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $red;
+}
+
+h1, h2 {
+  margin-bottom: 40px;
+}
+
+h1, .title.large {
+  font-size: 2em;
+  line-height: 1.2em;
+}
+
+h2, .title.medium {
+  font-size: 1.5em;
+}
+
+h3, form label {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5, .small {
+  font-size: 0.8em;
+}
+
+h6 {
+  font-size: 0.6em;
+}
+
+p.large, li.large {
+  font-size: 1.2em;
+}
+
+footer {
+//  font-size: 0.8em;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: $gray;
+  color: white;
+  padding: 0 4px;
+  &:link { color: $red }
+  &:hover { background-color: $darkGray; }
+  &:active { color: $red }
+}
+
+a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn {
+  @include transition(color 0.25s linear, background-color 0.25s linear, border-color 0.25s linear);
+}
+
+strong, .highlight {
+  font-weight: bold;
+  color: $red !important;
+}
+
+input, textarea, .dropdown {
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.2em;
+  font: inherit;
+  color: inherit;
+}
+
+.btn {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.btn, a.btn, #close-overlay {
+  color: white;
+}
+
+.white {
+  color: white;
+}
+
+.gray {
+  color: $gray;
+}
+
+.light-gray {
+  color: $darkGray;
+}
+
+hr {
+  margin: 10px auto;
+  border: 0;
+  color: $gray;
+  background-color: $gray;
+  height: 1px;
+}
+
+.error {
+  color: $red;
+}

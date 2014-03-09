@@ -1,6 +1,21 @@
-#wufoo-mabxluo03t6is3
-  Fill out my
-  = link_to 'online form', 'https://itsyourdistrict.wufoo.com/forms/mabxluo03t6is3'
+/ #wufoo-mabxluo03t6is3
+/   Fill out my
+/   = link_to 'online form', 'https://itsyourdistrict.wufoo.com/forms/mabxluo03t6is3'
+/ 
+
+%div{style: 'width: 500px; height:500px; margin: 0px auto 0 auto;'}
+  .center{style: 'position:relative;'}
+    = image_tag 'logo-01.png', :alt => 'IYD'
+    %p{style: 'margin: 40px 0; padding:40px; background-color:white;'} 
+      %strong
+        itsyourdistrict.org
+      is a comprehensive database that provides a platform |
+      for people seeking to serve their community. Community conscious neighbors |
+      and organizations can network, advocate, and connect with like-minded |
+      groups and individuals within their district. |
+      %a#show-form.btn{style: 'margin-top: 40px'} TELL US ABOUT YOUR ORGANIZATION
+    %p
+#wufoo-mabxluo03t6is3{style: 'display:none; position: absolute; top: 0; left: 50%; width: 600px; margin:60px 0 60px -300px; padding:40px; background-color: white;'}
 
 :javascript
   var mabxluo03t6is3;(function(d, t) {
@@ -19,3 +34,23 @@
   try { mabxluo03t6is3 = new WufooForm();mabxluo03t6is3.initialize(options);mabxluo03t6is3.display(); } catch (e) {}};
   var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
   })(document, 'script');
+
+= content_for :js do
+  :javascript  
+    $(document).ready(function() {
+      $('#show-form').click(function() {
+        $('#wufoo-mabxluo03t6is3').show('fast', function() {
+          $('#content').height($(this).height());
+        });
+      });
+      $('body').click(function(event){  
+        isOutside = true;        
+        
+        $(event.target).closest('wufoo-maxluo03t6is3').each(function(){
+          isOutside = false;
+        });
+        if (isOutside && event.target.id != 'show-form') {
+          $('#wufoo-mabxluo03t6is3').hide('fast');
+        }
+      })
+    });

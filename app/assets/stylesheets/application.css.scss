@@ -1,0 +1,53 @@
+/* COLORS */
+
+$gray: #a6a6a6;
+$darkGray: #515151;
+$textGray: #2d2d2d;
+$blue: #4dbce9;
+$red: #ac0000;
+
+
+/* PRE-SET MIXINS */
+
+@import 'bourbon';
+
+
+/* HELPER MIXINS */
+
+@mixin background-cover {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";
+}
+
+@mixin placeholder($color) {
+  &::-webkit-input-placeholder {
+     color: $color;
+  }
+  &:-moz-placeholder {  
+     color: $color;  
+  }
+  &::-moz-placeholder {  
+     color: $color;  
+  }
+  &:-ms-input-placeholder {
+     color: $color;  
+  }
+}
+
+
+/* INCLUDED CSS - GENERAL */
+
+@import 'reset';
+@import 'layout';
+@import 'typography';
+@import 'button';
+@import 'form';
+
+
+
+
+

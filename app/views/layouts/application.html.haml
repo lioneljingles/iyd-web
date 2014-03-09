@@ -1,0 +1,18 @@
+!!!
+%html
+
+  %head
+    %title= content_for?(:title) ? yield(:title) : 'It\'s Your District!'
+    = stylesheet_link_tag :application, media: "all", :'data-turbolinks-track' => true
+    %link{href: 'http://fonts.googleapis.com/css?family=Roboto:400,700|Sanchez:400italic,400', rel:'stylesheet', type:'text/css'}
+    = csrf_meta_tags
+    = yield(:head)
+    
+  %body
+    / = render 'layouts/header'
+    #content
+      / = render 'layouts/messages'
+      = yield
+    / = render 'layouts/footer'
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = yield(:js)
