@@ -12,48 +12,8 @@
       is a comprehensive database that provides a platform |
       for people seeking to serve their community. Community conscious neighbors |
       and organizations can network, advocate, and connect with like-minded |
-      groups and individuals within their district. |
-      %a#show-form.btn{style: 'margin-top: 40px'} TELL US ABOUT YOUR ORGANIZATION
-      %p.small
-        You can also give us your info through the following link:
-        %br
-        = link_to "https://itsyourdistrict.wufoo.com/forms/its-your-district/",
-           "https://itsyourdistrict.wufoo.com/forms/its-your-district/", target: '_blank'
-#wufoo-mabxluo03t6is3{style: 'display:none; position: absolute; top: 0; left: 50%; min-height: 2800px; height: auto; width: 600px; margin:60px 0 60px -300px; padding:40px; background-color: white;'}
-
-
-= content_for :js do
-  :javascript  
-    var mabxluo03t6is3;
-    (function(d, t) {
-    var s = d.createElement(t), options = {
-    'userName':'itsyourdistrict', 
-    'formHash':'mabxluo03t6is3', 
-    'autoResize':true,
-    'height':'1841',
-    'async':true,
-    'host':'wufoo.com',
-    'header':'show', 
-    'ssl':true};
-    s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'wufoo.com/scripts/embed/form.js';
-    s.onload = s.onreadystatechange = function() {
-    var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
-    try { mabxluo03t6is3 = new WufooForm();mabxluo03t6is3.initialize(options);mabxluo03t6is3.display(); } catch (e) {}};
-    var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
-    })(document, 'script');
-  
-    $(function() {
-      $('#show-form').click(function() {
-        $('#wufoo-mabxluo03t6is3').show('fast');
-      });
-      $('body').click(function(event){  
-        isOutside = true;        
-      
-        $(event.target).closest('wufoo-maxluo03t6is3').each(function(){
-          isOutside = false;
-        });
-        if (isOutside && event.target.id != 'show-form') {
-          $('#wufoo-mabxluo03t6is3').hide('fast');
-        }
-      })
-    });
+      groups and individuals within their district.
+      %br
+      %br
+      %br
+      = link_to 'TELL US ABOUT YOUR ORGANIZATION', 'https://itsyourdistrict.wufoo.com/forms/its-your-district/', target: '_blank', class: :btn
