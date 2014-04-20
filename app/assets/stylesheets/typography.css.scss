@@ -8,7 +8,7 @@ body {
   color: $textGray;
 }
 
-h1, h2, h3, h4, h5, h6, form label, .btn {
+h1, h2, h3, h4, h5, h6, form label, .btn, .tag {
   font-family: $titleFontFamily;
   font-weight: normal;
 }
@@ -57,15 +57,13 @@ footer {
 a {
   cursor: pointer;
   text-decoration: none;
-  background-color: $gray;
-  color: white;
+  color: $red;
   padding: 0 4px;
-  &:link { color: $red }
-  &:hover { background-color: $darkGray; }
-  &:active { color: $red }
+  &:link, &:active, &:visited { color: $red; }
+  &:hover { color: darken($red, 10%); }
 }
 
-a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn {
+a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn, .tag {
   @include transition(color 0.25s linear, background-color 0.25s linear, border-color 0.25s linear);
 }
 
@@ -81,12 +79,15 @@ input, textarea, .dropdown {
   color: inherit;
 }
 
-.btn {
+.btn, .tag {
   font-size: 0.8em;
   font-style: italic;
+  &.large {
+   font-size: 1.2em; 
+  }
 }
 
-.btn, a.btn, #close-overlay {
+.btn, a.btn, .tag, a.tag, #close-overlay {
   color: white;
 }
 

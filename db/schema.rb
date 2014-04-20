@@ -16,20 +16,6 @@ ActiveRecord::Schema.define(version: 20140419205050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "labels", force: true do |t|
-    t.string "name", null: false
-  end
-
-  add_index "labels", ["name"], name: "index_labels_on_name", using: :btree
-
-  create_table "labels_organizations", force: true do |t|
-    t.integer "organization_id"
-    t.integer "label_id"
-  end
-
-  add_index "labels_organizations", ["label_id", "organization_id"], name: "index_labels_organizations_on_label_id_and_organization_id", unique: true, using: :btree
-  add_index "labels_organizations", ["organization_id"], name: "index_labels_organizations_on_organization_id", using: :btree
-
   create_table "organizations", force: true do |t|
     t.string   "slug",         null: false
     t.string   "email",        null: false
@@ -51,5 +37,19 @@ ActiveRecord::Schema.define(version: 20140419205050) do
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
   add_index "organizations", ["slug"], name: "index_organizations_on_slug", unique: true, using: :btree
+
+  create_table "organizations_tags", force: true do |t|
+    t.integer "organization_id"
+    t.integer "tag_id"
+  end
+
+  add_index "organizations_tags", ["organization_id", "tag_id"], name: "index_organizations_tags_on_organization_id_and_tag_id", unique: true, using: :btree
+  add_index "organizations_tags", ["tag_id"], name: "index_organizations_tags_on_tag_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string "name", null: false
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
 
 end

@@ -1,0 +1,23 @@
+#action {
+  padding: 20px 0 50px 0;
+  .logo {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin-right: 60px;
+    background: transparent url(image_path('logo-action.png')) no-repeat scroll center center;
+    background-size: 200px 200px;
+    overflow: hidden;
+    text-indent: -9999px;
+  }
+  .text {
+    display: inline-block;
+    width: 400px;
+    margin-top: 10px;
+    vertical-align: top;
+  }
+}
+
+#tags {
+  text-align: center;
+}

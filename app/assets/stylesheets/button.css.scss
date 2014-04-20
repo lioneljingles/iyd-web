@@ -1,15 +1,38 @@
-.btn {
-  min-width: 100px;
+.btn, .tag {
   display: inline-block;
-  background-color: $blue;
-  border: none; 
+  border: none;
   color: white;
   text-transform: uppercase;
   font-weight: bold;
-  letter-spacing: 1px;
-  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
   @include transition(background-color 0.25s linear);
+}
+
+.btn {
+  min-width: 100px;
+  background-color: $red;
+  padding: 10px 20px;
   &:hover {
-    background-color: darken($blue, 5%);
+    background-color: darken($red, 10%);
   }
+  &.large {
+    min-width: 150px;
+    padding: 15px 30px;
+  }
+}
+
+.tag {
+  min-width: 60px;
+  background-color: $gray;
+  margin: 4px;
+  padding: 4px 8px;
+  &:hover {
+    background-color: darken($gray, 10%);
+  }
+  &.selected {
+    background-color: $darkGray;
+    cursor: default;
+  }
+  
 }

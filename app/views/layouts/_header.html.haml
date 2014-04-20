@@ -1,8 +1,9 @@
-%header.main
+%header
   .container
     %ul
       %li#logo
       - if logged_in?
-        %li= link_to 'Logout', logout_path, method: :delete
+        %li.rightmost= link_to 'Logout', logout_path, method: :delete
       - else
-        %li= link_to 'Login', login_path
+        %li.rightmost= link_to 'Login', login_path
+      .clear

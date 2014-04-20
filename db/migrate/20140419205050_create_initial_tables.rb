@@ -22,19 +22,21 @@ class CreateInitialTables < ActiveRecord::Migration
     add_index :organizations, :slug, :unique => true
     add_index :organizations, :name, :unique => true
     
-    create_table :labels do |t|
+    create_table :tags do |t|
       t.string :name, null: false
     end
     
-    add_index :labels, :name
+    add_index :tags, :name
     
-    create_table :labels_organizations do |t|
+    create_table :organizations_tags do |t|
       t.belongs_to :organization
-      t.belongs_to :label
+      t.belongs_to :tag
     end
     
-    add_index :labels_organizations, [:label_id, :organization_id], :unique => true
-    add_index :labels_organizations, :organization_id
+    add_index :organizations_tags, [:organization_id, :tag_id], :unique => true
+    add_index :organizations_tags, :tag_id
+    
+    
     
   end
 end

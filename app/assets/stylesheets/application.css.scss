@@ -1,5 +1,6 @@
 /* COLORS */
 
+$lightGray: #efefef;
 $gray: #a6a6a6;
 $darkGray: #515151;
 $textGray: #2d2d2d;
@@ -46,6 +47,10 @@ $red: #ac0000;
 @import 'typography';
 @import 'button';
 @import 'form';
+
+/* INCLUDED CSS - PAGES */
+
+@import 'landing';
 
 
 

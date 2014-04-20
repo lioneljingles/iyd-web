@@ -9,10 +9,12 @@
     = yield(:head)
     
   %body
-    / = render 'layouts/header'
+    - if content_for?(:header)
+      = content_for(:header)
+    - else
+      = render 'layouts/header'
     #content
-      / = render 'layouts/messages'
       = yield
-    / = render 'layouts/footer'
+    = render 'layouts/footer'
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = yield(:js)
