@@ -2,6 +2,7 @@ class CreateInitialTables < ActiveRecord::Migration
   
   def change
     create_table :organizations do |t|
+      t.integer :state, default: 1, null: false
       t.string :slug, null: false
       t.string :email, null: false
       t.string :password

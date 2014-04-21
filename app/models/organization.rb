@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
   
   has_and_belongs_to_many :tags
   
+  validates :state, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, uniqueness: true, confirmation: true
@@ -15,5 +16,18 @@ class Organization < ActiveRecord::Base
   
   serialize :images, JSON
   serialize :settings, JSON
+  
+  before_create :assign_defaults
+  
+  module Role
+    REMOVED = -1
+    NEW = 0
+    ACTIVE = 1
+    ADMIN = 2
+  end
+  
+  def assign_defaults
+    
+  end
   
 end

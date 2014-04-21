@@ -1,20 +1,135 @@
-input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
-  padding: 10px; 
-  color: #4c4c4c; 
-  outline: none;
-  font-style:italic;
-  font-size: 14px;
-  background-color: #fff;
-  border: 1px solid #d2cfcf;
-  @include box-shadow(inset 0 0px 5px #e2e2e2);
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, .form-select, select {
   -webkit-appearance: none;
+  width: 350px;
+  height: 40px;
+  padding: 0 10px;
+  outline: none;
+  border: 2px solid $lightGray;
+  border-radius: 2px;
+  background-color: #ffe;
+  -webkit-appearance: none;
+  font: inherit;
+  color: inherit;
+  @include placeholder($gray);
   &:focus {
-    color: #202223;
-    border: 1px solid #BAD7DF;
-    @include box-shadow(inset 0 0px 2px #ceecf6, 0 0 4px #ceecf6);  
+    border-color: $blue;
+  }
+  &.error {
+    background-color: #FDD;
+  }
+}
+textarea {
+  height: 80px;
+  padding: 5px;
+}
+input[type="checkbox"] {
+  position: relative;
+  top: -2px;
+}
+input[type="checkbox"], input[type="radio"] {
+  margin-right: 5px;
+  cursor: pointer;
+}
+input[type="file"] {
+  display: none;
+}
+label {
+  display: inline-block;
+  width: 250px;
+  height: 35px;
+  line-height: 35px;
+  vertical-align: top;
+}
+.form-select {
+  line-height: 35px;
+  cursor: pointer;
+  position: relative;
+  .select-title {
+    .default {
+      color: $gray;
+    }
+    .caret {
+      font-size: 0.7em;
+      float: right;
+    }
+  }
+  ul {
+    display: none;
+    z-index: 10;
+    position: absolute;
+    top: 34px;
+    left: -1px;
+    width: inherit;
+    max-height: 200px;
+    overflow: scroll;
+    line-height: 1em;
+    background-color: #fcfcfc;
+    border: 1px solid #d6d6d6;
+    li {
+      padding: 8px 10px;
+      &.none-selected {
+        color: $gray;
+      }
+      &:hover {
+        background-color: #d6d6d6;
+      }
+    }
   }
 }
 
-.control-group label.control-label {
-  padding-top: 11px;
+.form-row {
+  clear: both;
+  margin-bottom: 20px;
+  .note {
+    margin-top: 5px;
+  }
+  &.single {
+    input, .form-select {
+      width: 380px;
+    }
+  }
+  &.half {
+    input, .form-select {
+      width: 180px;
+      &:first-child {
+        margin-right: 16px;
+      }
+    }
+  }
+  &.third-first {
+    input:first-child, .form-select:first-child {
+      width: 120px;
+      margin-right: 16px;
+    }
+    input:last-child, .form-select:last-child {
+      width: 240px;
+    }
+  }
+  &.third-last {
+    input:first-child, .form-select:first-child {
+      width: 240px;
+      margin-right: 16px;
+    }
+    input:last-child, .form-select:last-child {
+      width: 120px;
+    }
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .btn {
+    position: relative;
+    top: 4px;
+  }
+  .tag-check {
+    display: inline-block;
+    font-size: 0.8em;
+  }
+}
+.form-submit {
+  display: block;
+  clear: both;
+  width: 300px;
+  margin: 40px auto 0 auto;
+  text-align: center;
 }

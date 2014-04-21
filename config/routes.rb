@@ -5,9 +5,10 @@ IydWeb::Application.routes.draw do
   get '/login',  to: 'sessions#new'
   post '/login',  to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  # get '/register', to: 'sessions#register'
+  get '/reset', to: 'sessions#reset'
   
-  namespace :org do
-    get 'signup', to: 'organizations#new'
-  end
+  get 'org/register', to: 'organizations#new'
+  post 'org/register', to: 'organizations#create'
   
 end

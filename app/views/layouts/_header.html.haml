@@ -2,8 +2,9 @@
   .container
     %ul
       %li#logo
-      - if logged_in?
-        %li.rightmost= link_to 'Logout', logout_path, method: :delete
-      - else
-        %li.rightmost= link_to 'Login', login_path
+        - if logged_in?
+          %li.rightmost= link_to 'Logout', logout_path, method: :delete, remote: true
+        - else
+          %li.rightmost= link_to 'Login', login_path, remote: true
+          %li= link_to 'Register', org_register_path, remote: true
       .clear

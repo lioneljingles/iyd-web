@@ -1,3 +1,8 @@
+header.landing {
+  background: $darkGray url(image_path('crowd-action-dark.jpg')) no-repeat scroll center center;
+  @include background-cover;
+}
+
 #action {
   padding: 20px 0 50px 0;
   .logo {

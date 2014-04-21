@@ -3,15 +3,16 @@
     .container
       %ul
         - if logged_in?
-          %li.rightmost= link_to 'Logout', logout_path, method: :delete
+          %li.rightmost= link_to 'Logout', logout_path, method: :delete, remote: true
         - else
-          %li.rightmost= link_to 'Login', login_path
-        .clear
+          %li.rightmost= link_to 'Login', login_path, remote: true
+          %li= link_to 'Register', org_register_path, remote: true
+      .clear
     #action
-      .logo
+      .logo It's Your District
       .text
         %h1.white Connecting non-profits in San Francisco District 6.
-        = link_to 'Sign up now!', org_signup_path, class: [:btn, :large]
+        = link_to 'Sign up now!', org_register_path, class: [:register, :btn, :large], remote: true
 
 #tags
   .tag.selected ALL

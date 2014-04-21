@@ -1,0 +1,42 @@
+%h2 Register Organization
+%p All fields are required.
+= form_tag org_register_path do
+  .form-row
+    = label_tag :email
+    = text_field_tag :email, params[:email]
+    .note This email will be used for contact and login purposes.
+  .form-row
+    = label_tag :password
+    = password_field_tag :password
+  .form-row
+    = label_tag :password_confirmation
+    = password_field_tag :password_confirmation
+  .form-row
+    = label_tag :name, 'Organization Name'
+    = text_field_tag :name
+  .form-row
+    = label_tag :contact, 'Contact Name'
+    = text_field_tag :contact
+  .form-row
+    = label_tag :website, 'Website'
+    = text_field_tag :website
+  .form-row
+    = label_tag :summary, 'Summary'
+    = text_area_tag :summary
+    .note A 1 sentence summary of your organization.
+  .form-row
+    = label_tag :name, 'Description'
+    = text_area_tag :summary
+    .note A 3-5 sentence description of your organization.
+  .form-row
+    = label_tag :image, 'Image'
+    = file_field_tag :image
+    %a#select-image.btn.small.gray Select Image
+  .form-row
+    = label_tag :tags
+    .clear
+    - for tag in @tags
+      .tag
+        = check_box_tag "tag_#{tag.name.downcase}", tag.name, false, :name => 'tags[]'
+        = tag.name
+  = submit_tag "Register", class: [:btn, :'form-submit']

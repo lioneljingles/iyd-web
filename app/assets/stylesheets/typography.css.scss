@@ -8,7 +8,7 @@ body {
   color: $textGray;
 }
 
-h1, h2, h3, h4, h5, h6, form label, .btn, .tag {
+h1, h2, h3, h4, h5, h6, .btn, .tag {
   font-family: $titleFontFamily;
   font-weight: normal;
 }
@@ -30,7 +30,7 @@ h2, .title.medium {
   font-size: 1.5em;
 }
 
-h3, form label {
+h3 {
   font-size: 1.2em;
 }
 
@@ -58,7 +58,6 @@ a {
   cursor: pointer;
   text-decoration: none;
   color: $red;
-  padding: 0 4px;
   &:link, &:active, &:visited { color: $red; }
   &:hover { color: darken($red, 10%); }
 }
@@ -77,6 +76,11 @@ input, textarea, .dropdown {
   font-size: 1.2em;
   font: inherit;
   color: inherit;
+}
+
+.note {
+  font-size: 0.8em;
+  color: $darkGray;
 }
 
 .btn, .tag {

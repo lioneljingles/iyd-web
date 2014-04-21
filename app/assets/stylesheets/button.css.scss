@@ -7,6 +7,7 @@
   cursor: pointer;
   text-align: center;
   @include transition(background-color 0.25s linear);
+  @include user-select-none;
 }
 
 .btn {
@@ -19,6 +20,16 @@
   &.large {
     min-width: 150px;
     padding: 15px 30px;
+  }
+  &.small {
+    min-width: 80px;
+    padding: 5px 10px;
+  }
+  &.gray {
+    background-color: $darkGray;
+    &:hover {
+      background-color: $textGray;
+    }
   }
 }
 
