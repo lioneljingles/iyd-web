@@ -1,0 +1,10 @@
+%h2= "Contact #{@org.name}"
+= form_tag contact_path, id: 'contact' do
+  = hidden_field_tag :slug, @org.slug
+  .form-row
+    = label_tag :email, 'Your E-mail address'
+    = text_field_tag :email, nil, placeholder: 'email@example.com'
+  .form-row
+    = label_tag :message
+    = text_area_tag :message, nil, class: :large
+  = submit_tag "Send", class: [:btn, :'form-submit']

@@ -21,17 +21,19 @@ h1, h2 {
   margin-bottom: 40px;
 }
 
-h1, .title.large {
+h1 {
   font-size: 2em;
   line-height: 1.2em;
 }
 
-h2, .title.medium {
+h2, .cover.large .title {
   font-size: 1.5em;
+  line-height: 1.2em;
 }
 
-h3 {
+h3, .cover.small .title {
   font-size: 1.2em;
+  line-height: 1.2em;
 }
 
 h4 {
@@ -57,9 +59,9 @@ footer {
 a {
   cursor: pointer;
   text-decoration: none;
-  color: $red;
-  &:link, &:active, &:visited { color: $red; }
-  &:hover { color: darken($red, 10%); }
+  color: $blue;
+  &:link, &:active, &:visited { color: $blue; }
+  &:hover { color: darken($blue, 10%); }
 }
 
 a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn, .tag {
@@ -68,7 +70,7 @@ a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn, .tag {
 
 strong, .highlight {
   font-weight: bold;
-  color: $red !important;
+  color: $blue !important;
 }
 
 input, textarea, .dropdown {
@@ -81,6 +83,10 @@ input, textarea, .dropdown {
 .note {
   font-size: 0.8em;
   color: $darkGray;
+}
+
+.error {
+  color: $red;
 }
 
 .btn, .tag {
@@ -113,8 +119,4 @@ hr {
   color: $gray;
   background-color: $gray;
   height: 1px;
-}
-
-.error {
-  color: $red;
 }

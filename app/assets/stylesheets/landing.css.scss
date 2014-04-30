@@ -26,3 +26,46 @@ header.landing {
 #tags {
   text-align: center;
 }
+
+.cover {
+  position: relative;
+  background: transparent none no-repeat scroll center center;
+  @include background-cover;
+  &.large {
+    width: 100%;
+    height: 300px;
+    .title {
+      
+    }
+  }
+  .title {
+    color: $darkGray;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 15px;
+    padding: 10px;
+    background-color: white;
+    text-transform: uppercase;
+  }
+  .tags {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 10px;
+  }
+}
+
+.org-info {
+  background-color: $lightGray;
+  padding: 20px;
+  h3 {
+    margin-bottom: 20px;
+  }
+  ul {
+    li {
+      margin-bottom: 5px;
+    }
+  }
+}
+

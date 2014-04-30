@@ -2,17 +2,29 @@
   %header.landing
     .container
       %ul
-        - if logged_in?
-          %li.rightmost= link_to 'Logout', logout_path, method: :delete, remote: true
+        %li.fb= link_to 'Visit us on Facebook!', 'https://www.facebook.com/itsyourdistrict', target: '_blank'      
+        - if current_user.nil?
+          %li.logout.hide= link_to 'Logout', logout_path, method: :delete, remote: true
+          %li.login= link_to 'Login', login_path, remote: true
+          %li.register= link_to 'Register', org_path, remote: true
+          %li.org-link.hide
+            = link_to '#' do
+              %span> #
+              's Page
         - else
-          %li.rightmost= link_to 'Login', login_path, remote: true
-          %li= link_to 'Register', org_register_path, remote: true
-      .clear
+          %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true
+          %li.login.hide= link_to 'Login', login_path, remote: true
+          %li.register.hide= link_to 'Register', org_path, remote: true
+          %li.org-link
+            = link_to org_slug_path(current_user.slug) do
+              %span>= current_user.name
+              's Page
+        .clear
     #action
       .logo It's Your District
       .text
         %h1.white Connecting non-profits in San Francisco District 6.
-        = link_to 'Sign up now!', org_register_path, class: [:register, :btn, :large], remote: true
+        = link_to 'Sign up now!', org_path, class: [:register, :btn, :large], remote: true
 
 #tags
   .tag.selected ALL

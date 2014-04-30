@@ -2,22 +2,16 @@
   :javascript
     App.errors = #{@errors.to_json}
 
-%h2 Register Organization
-= form_tag org_path, multipart: true do
+%h2 Update Details
+= form_tag account_details_path(@org.slug), multipart: true, method: :put do
   - if not @errors or @errors.empty?
     %p All fields are required.
   - else
-    %p.error There are problems with your registration form. Please fix the errors below and try again.
+    %p.error There are problems with the form. Please fix the errors below and try again.
   .form-row
     = label_tag :email
     = text_field :organization, :email
     .note This email will be used for contact and login purposes.
-  .form-row
-    = label_tag :password
-    = password_field :organization, :password
-  .form-row
-    = label_tag :password_confirmation
-    = password_field :organization, :password_confirmation
   .form-row
     = label_tag :name, 'Organization Name'
     = text_field :organization, :name
@@ -48,4 +42,4 @@
       .tag
         = check_box_tag "tag_#{tag.name.downcase}", tag.name, false, :name => 'tags[]'
         = tag.name
-  = submit_tag "Register", class: [:btn, :'form-submit']
+  = submit_tag "Update", class: [:btn, :'form-submit']

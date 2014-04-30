@@ -1,0 +1,37 @@
+- if @welcome
+  - content_for(:notice) do
+    %h2 Welcome to It's Your District!
+    %p
+      You have signed up and your page is live. Feel free to share the URL:
+      = link_to org_slug_url(slug: @org.slug)
+    %p 
+      If you have any questions, please
+      = link_to "contact us!", contact_path(slug: 'its-your-district'), remote: true
+
+.cover.large{style: "background-image: url(#{@org.images.first.image.url});"}
+  .title= @org.name
+  .tags
+    - @org.tags.each do |tag|
+      .tag= tag.name
+
+.org-info
+  .col-1-2
+    %h3 Information
+    %ul
+      %li= @org.location
+      %li= link_to @org.short_website, @org.website
+
+  .col-1-2
+    %h3 Contact
+    %ul
+      %li= @org.contact
+      %li=mail_to @org.email
+
+  .clear.buffer
+
+  %h3 Mission
+  %p= @org.description
+  
+  .buffer
+  .center
+    = link_to "Contact #{@org.name}", contact_path(slug: @org.slug), remote: true, class: :btn

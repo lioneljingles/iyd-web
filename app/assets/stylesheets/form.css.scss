@@ -1,7 +1,9 @@
+$formElementHeight: 40px;
+
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, .form-select, select {
   -webkit-appearance: none;
   width: 350px;
-  height: 40px;
+  height: $formElementHeight;
   padding: 0 10px;
   outline: none;
   border: 2px solid $lightGray;
@@ -15,16 +17,19 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     border-color: $blue;
   }
   &.error {
-    background-color: #FDD;
+    border-color: $red;
   }
 }
 textarea {
   height: 80px;
   padding: 5px;
+  &.large {
+    height: 160px;
+  }
 }
 input[type="checkbox"] {
   position: relative;
-  top: -2px;
+  top: -1px;
 }
 input[type="checkbox"], input[type="radio"] {
   margin-right: 5px;
@@ -36,12 +41,12 @@ input[type="file"] {
 label {
   display: inline-block;
   width: 250px;
-  height: 35px;
-  line-height: 35px;
+  height: $formElementHeight;
+  line-height: $formElementHeight;
   vertical-align: top;
 }
 .form-select {
-  line-height: 35px;
+  line-height: $formElementHeight;
   cursor: pointer;
   position: relative;
   .select-title {
@@ -80,7 +85,7 @@ label {
 .form-row {
   clear: both;
   margin-bottom: 20px;
-  .note {
+  .note, .error {
     margin-top: 5px;
   }
   &.single {
@@ -102,12 +107,12 @@ label {
       margin-right: 16px;
     }
     input:last-child, .form-select:last-child {
-      width: 240px;
+      width: 2$formElementHeight;
     }
   }
   &.third-last {
     input:first-child, .form-select:first-child {
-      width: 240px;
+      width: 2$formElementHeight;
       margin-right: 16px;
     }
     input:last-child, .form-select:last-child {
@@ -125,11 +130,18 @@ label {
     display: inline-block;
     font-size: 0.8em;
   }
+  .form-link {
+    display: inline-block;
+    height: $formElementHeight;
+    line-height: $formElementHeight;
+  }
 }
 .form-submit {
   display: block;
   clear: both;
   width: 300px;
-  margin: 40px auto 0 auto;
+  margin: $formElementHeight auto 0 auto;
   text-align: center;
 }
+
+

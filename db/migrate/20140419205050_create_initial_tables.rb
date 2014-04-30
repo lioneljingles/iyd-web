@@ -8,14 +8,13 @@ class CreateInitialTables < ActiveRecord::Migration
       t.string :password
       t.string :reset_token
       t.string :name, null: false
-      t.string :contact_name
+      t.string :contact
       t.string :phone
       t.text :summary, null: false
       t.text :description
       t.string :website
       t.string :district, null: false
       t.string :city, null: false
-      t.string :images, null: false
       t.string :settings, null: false
       t.timestamps
     end
@@ -37,7 +36,12 @@ class CreateInitialTables < ActiveRecord::Migration
     add_index :organizations_tags, [:organization_id, :tag_id], :unique => true
     add_index :organizations_tags, :tag_id
     
+    create_table :images do |t|
+      t.belongs_to :organization
+      t.timestamps
+    end
     
-    
+    add_attachment :images, :image
   end
+  
 end

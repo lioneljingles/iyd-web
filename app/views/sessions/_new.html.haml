@@ -1,10 +1,11 @@
 %h2 Login
-= form_tag login_path do
+= form_tag login_path, remote: true, id: 'login-form' do
+  %p.error.hide Incorrect email and / or password. Please try again.
   .form-row
     = label_tag :email
     = text_field_tag :email, params[:email]
   .form-row
     = label_tag :password
     = password_field_tag :password
-  = link_to 'Forgot Password?', reset_path, id: 'reset-password'
-  = submit_tag "Login", class: [:btn, :'form-submit']
+  = link_to 'Forgot Password?', reset_path, id: 'reset-password', remote: true
+  = submit_tag "Login", remote: true, class: [:btn, :'form-submit']

@@ -2,10 +2,6 @@
   .container
     .copyright It's Your District &copy; 2014
     %ul
-      - if logged_in?
-        %li.rightmost= link_to 'Logout', logout_path, :method => 'delete'
-      - else
-        %li.rightmost= link_to 'Login', login_path
-        
-      %li= link_to 'Contact', "mailto:info@itsyourdistrict.org"
+      %li.rightmost= link_to 'Visit us on Facebook!', 'https://www.facebook.com/itsyourdistrict', target: '_blank' 
+      %li= link_to 'Contact', contact_path(slug: 'its-your-district'), remote: true
       .clear

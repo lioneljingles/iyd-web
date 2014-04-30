@@ -16,22 +16,31 @@ ActiveRecord::Schema.define(version: 20140419205050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "images", force: true do |t|
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
   create_table "organizations", force: true do |t|
-    t.integer  "state",        default: 1, null: false
-    t.string   "slug",                     null: false
-    t.string   "email",                    null: false
+    t.integer  "state",       default: 1, null: false
+    t.string   "slug",                    null: false
+    t.string   "email",                   null: false
     t.string   "password"
     t.string   "reset_token"
-    t.string   "name",                     null: false
-    t.string   "contact_name"
+    t.string   "name",                    null: false
+    t.string   "contact"
     t.string   "phone"
-    t.text     "summary",                  null: false
+    t.text     "summary",                 null: false
     t.text     "description"
     t.string   "website"
-    t.string   "district",                 null: false
-    t.string   "city",                     null: false
-    t.string   "images",                   null: false
-    t.string   "settings",                 null: false
+    t.string   "district",                null: false
+    t.string   "city",                    null: false
+    t.string   "settings",                null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

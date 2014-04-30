@@ -17,6 +17,9 @@
     - else
       = render 'layouts/header'
     #content
+      - if content_for?(:notice)
+        #notice
+          = yield(:notice)
       = yield
     = render 'layouts/footer'
     = javascript_include_tag "application", "data-turbolinks-track" => true
