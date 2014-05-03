@@ -1,24 +1,15 @@
 - content_for(:header) do
   %header.landing
     .container
-      %ul
+      %ul{class: current_user.nil? ? '' : 'logged-in'}
         %li.fb= link_to 'Visit us on Facebook!', 'https://www.facebook.com/itsyourdistrict', target: '_blank'      
-        - if current_user.nil?
-          %li.logout.hide= link_to 'Logout', logout_path, method: :delete, remote: true
-          %li.login= link_to 'Login', login_path, remote: true
-          %li.register= link_to 'Register', org_path, remote: true
-          %li.org-link.hide
-            = link_to '#' do
-              %span> #
-              's Page
-        - else
-          %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true
-          %li.login.hide= link_to 'Login', login_path, remote: true
-          %li.register.hide= link_to 'Register', org_path, remote: true
-          %li.org-link
-            = link_to org_slug_path(current_user.slug) do
-              %span>= current_user.name
-              's Page
+        %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true
+        %li.login= link_to 'Login', login_path, remote: true
+        %li.register= link_to 'Register', org_path, remote: true
+        %li.org-link
+          = link_to '#' do
+            %span>= current_user.nil? ? '#' : current_user.name
+            's Page
         .clear
     #action
       .logo It's Your District
@@ -27,6 +18,33 @@
         = link_to 'Sign up now!', org_path, class: [:register, :btn, :large], remote: true
 
 #tags
-  .tag.selected ALL
+  .tag.all.selected ALL
   - for tag in @tags
-    .tag>= tag.name
+    .tag{:'data-id' => tag.id}>= tag.name
+
+#main.landing
+  .row{:'data-row' => 0}
+    .tile.loading
+      .cover.large
+        = link_to 'Title', '#', class: [:title]
+      .org-info
+        %p.summary
+        .center
+          = link_to 'More Info', '#', class: [:btn, :info]
+          = link_to 'Contact', '#', remote: true, class: [:btn, :contact]
+  .row.template{:'data-row' => 0}
+    .tile.col-1-2.loading
+      .cover.small
+        = link_to 'Title', '#', class: [:title]
+      .org-info
+        %p
+          %span.summary
+          = link_to 'Learn more...', '#'
+    .tile.col-1-2.loading
+      .cover.small
+        = link_to 'Title', '#', class: [:title]
+      .org-info
+        %p
+          %span.summary
+          = link_to 'Learn more...', '#'
+.clear

@@ -25,19 +25,14 @@ header.landing {
 
 #tags {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .cover {
   position: relative;
-  background: transparent none no-repeat scroll center center;
+  width: 100%;
+  background: $lightGray url(image_path('loading.gif')) no-repeat scroll center center;
   @include background-cover;
-  &.large {
-    width: 100%;
-    height: 300px;
-    .title {
-      
-    }
-  }
   .title {
     color: $darkGray;
     position: absolute;
@@ -54,11 +49,35 @@ header.landing {
     bottom: 0;
     margin: 10px;
   }
+  &.large {
+    height: 300px;
+  }
+  &.small {
+    height: 200px;
+  }
+}
+
+.tile {
+  &.loading {
+    .cover {
+      background-size: auto;
+    }
+    .title, .org-info p, .org-info a.btn {
+      display: none;
+    }
+  }
+  .btn.info {
+    margin-right: 20px;
+  }
 }
 
 .org-info {
   background-color: $lightGray;
   padding: 20px;
+//  min-height: 60px;
+  margin-bottom: 20px;
+  p {
+  }
   h3 {
     margin-bottom: 20px;
   }
@@ -68,4 +87,8 @@ header.landing {
     }
   }
 }
+
+
+
+
 

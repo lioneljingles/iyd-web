@@ -1,5 +1,30 @@
 class OrganizationsController < ApplicationController
+  
+  def list
     
+    row = params[:row]
+    tag = params[:tag]
+    
+    debug_org = {
+      image: 'http://1.bp.blogspot.com/-f-KzlJE0ncU/TxGXIYMriII/AAAAAAAACXA/ddCZoDVUs_Y/s1600/Kitten+and+Puppy5.jpg', 
+      title: 'The puppy kitty committee', 
+      summary: 'An awesome group of amazing animals!',
+      path: '/org/something',
+      
+    }
+    
+    render json: {
+      success: true, 
+      row: row,
+      has_more: true,
+      orgs: [
+        debug_org,
+        debug_org,
+        debug_org
+      ]
+    }
+  end
+  
   def show
     @welcome = params.has_key?(:welcome)
     @org = Organization.includes(:images, :tags).find_by_slug(params[:slug])

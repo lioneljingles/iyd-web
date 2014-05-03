@@ -53,6 +53,7 @@ class Organization < ActiveRecord::Base
   private
   
   def assign_defaults
+    self.state = Organization::Role::NEW
     self.district = 6
     self.city = 'San Francisco'
     self.slug = self.name.parameterize

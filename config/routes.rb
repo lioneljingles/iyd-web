@@ -11,6 +11,8 @@ IydWeb::Application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/reset', to: 'sessions#reset'
   
+  get '/org-list', to: 'organizations#list'
+  
   get '/org', to: 'organizations#new'
   post '/org', to: 'organizations#create'
   

@@ -66,6 +66,16 @@ header {
   min-height: $headerHeight;
   background-color: $darkGray;
   ul {
+    &.logged-in {
+      li {
+        &.register, &.login {
+          display: none;
+        }
+        &.logout, &.org-link {
+          display: block;
+        }
+      }
+    }
     li {
       float: right;
       &.fb {
@@ -73,6 +83,12 @@ header {
       }
       &.logout, &.login {
         margin-right: -20px;
+      }
+      &.register, &.login {
+        display: block;
+      }
+      &.logout, &.org-link {
+        display: none;
       }
       &#logo {
         float: left;

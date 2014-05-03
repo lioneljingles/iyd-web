@@ -1,15 +1,17 @@
 $ ->
   
+  
   # JQUERY OBJECTS
   
   $overlay = $('#overlay')
+  
   
   # FUNCTIONS
   
   showFormErrors = ($form, errors) ->
     for error, message of errors
       $form.find('#' + error).addClass('error').after($('<div>', {class: 'note error'}).text(message))
-    $("html, body").animate({ scrollTop: $form.find('.error').first().offset().top - 40 }, 'fast');
+    $('html, body').animate({ scrollTop: $form.find('.error').first().offset().top - 40 }, 'fast');
   
   
   # INTERACTION EVENTS
@@ -36,7 +38,7 @@ $ ->
       $(this).replaceWith($(this).clone())
       $row.find('span.file-name').text('')
       $row.find('a.select-file').text('Select Image...')
-  
+
   
   # FORM VALIDATIONS
   
@@ -91,18 +93,84 @@ $ ->
     $target = $(event.target)
     if $target.attr('id') == 'login-form'
       if data.success == true
-        $('header ul li.login, header ul li.register').hide()
-        $('header ul li.logout, header ul li.org-link').show()
+        $('header ul').addClass('logged-in')
         $('header li.org-link a').attr(href: data.url).find('span').text(data.name)
         $overlay.hide 'fast', ->
           $(this).find('.content').empty()
       else
         $(this).find('.error').show('fast')
     else if $target.closest('li').hasClass('logout')
-      $('header ul li.login, header ul li.register').show()
-      $('header ul li.logout, header ul li.org-link').hide()
+      $('header ul').removeClass('logged-in')
     else
       $overlay.show('fast').find('.content').html(data)
+  
+  
+  # INFINITE FRONT PAGE
+  
+  $main = $('#main.landing')
+  $footer = $('footer')
+  
+  $template = $(this).find('.row.template').clone()
+  row = 0
+  tag_id = ''
+  has_more = true
+  loading_count = 1
+  
+  addRow = (row) ->
+    $.get '/org-list', {row: row, tag_id: tag_id}, (data) ->
+      if (data.success == true)
+        $main.find(".row[data-row='#{data.row}'] .tile").each (i, tile) ->
+          $tile = $(tile).removeClass('loading')
+          if i of data.orgs
+            org = data.orgs[i]
+            $cover = $tile.find('.cover').css('background-image': "url('#{org.image}')")
+            $cover.find('.title').text(org.title)
+            $tile.find('.org-info .summary').text(org.summary)
+            $tile.find('a').attr(href: org.path)
+            has_more = data.has_more
+            loading_count--
+          else
+            $tile.remove()
+  
+  if $main.length > 0
+    addRow(row)
+    $(window).on 'scroll.infinite', ->
+      if has_more and loading_count < 5
+        if $(window).scrollTop() + $(window).height() >= $footer.offset().top - 10
+          row++
+          loading_count++
+          $row = $template.clone()
+          $row.attr('data-row': row)
+          $main.append($row)
+          addRow(row)
+      else if not has_more
+        $(window).off 'scroll.infinite'
+  
+  
+  # TAG LOGIC
+  
+    $('.tag').click ->
+      $tag = $(this)
+      if not $tag.hasClass('selected')
+        $('.tag.selected').removeClass('selected')
+        $tag.addClass('selected')
+      if $tag.hasClass('all')
+        tag_id = ''
+      else
+        tag_id = $tag.attr('data-id')
+      $main.find('.row').each (i, row) ->
+        $row = $(row)
+        if $row.attr('data-row') == '0'
+          row = 0
+          has_more = true
+          loading_count = 1
+          addRow(row)
+          $row.find('.tile').addClass('loading').find('.cover').css('background-image': '')
+        else
+          $row.remove()
+
+
+
 
 
 
