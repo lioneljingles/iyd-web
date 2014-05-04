@@ -6,7 +6,7 @@
       = link_to org_slug_url(slug: @org.slug)
     %p 
       If you have any questions, please
-      = link_to "contact us!", contact_path(slug: 'its-your-district'), remote: true
+      = link_to "contact us!", contact_path + '?slug=it-s-your-district', remote: true
 
 .cover.large{style: "background-image: url(#{@org.images.first.image.url});"}
   .title= @org.name
@@ -34,4 +34,4 @@
   
   .buffer
   .center
-    = link_to "Contact #{@org.name}", contact_path(slug: @org.slug), remote: true, class: :btn
+    = link_to "Contact #{@org.name}", contact_path + "?slug=#{@org.slug}", remote: true, class: :btn

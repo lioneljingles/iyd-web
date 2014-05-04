@@ -5,38 +5,54 @@
 %h2 Register Organization
 = form_tag org_path, multipart: true do
   - if not @errors or @errors.empty?
-    %p All fields are required.
+    %p 
+      Fields marked
+      %strong *
+      are required.
   - else
     %p.error There are problems with your registration form. Please fix the errors below and try again.
   .form-row
-    = label_tag :email
-    = text_field :organization, :email
+    %label
+      Email
+      %strong *
+    = text_field :org, :email, placeholder: 'myname@mywebsite.com'
     .note This email will be used for contact and login purposes.
   .form-row
-    = label_tag :password
-    = password_field :organization, :password
+    %label
+      Password
+      %strong *
+    = password_field :org, :password
   .form-row
-    = label_tag :password_confirmation
-    = password_field :organization, :password_confirmation
+    %label
+      Password Confirmation
+      %strong *
+    = password_field :org, :password_confirmation
   .form-row
-    = label_tag :name, 'Organization Name'
-    = text_field :organization, :name
+    %label
+      Name
+      %strong *
+    = text_field :org, :name, placeholder: 'My Organization'
+    .note The name of your organization.
   .form-row
-    = label_tag :contact, 'Contact Name'
-    = text_field :organization, :contact
+    %label Contact
+    = text_field :org, :contact, placeholder: 'Jane Doe'
+    .note The contact person.
   .form-row
-    = label_tag :website, 'Website'
-    = text_field :organization, :website
+    %label Website
+    = text_field :org, :website, placeholder: 'www.mywebsite.com'
   .form-row
-    = label_tag :summary, 'Summary'
-    = text_area :organization, :summary
-    .note A 1 sentence summary of your organization.
+    %label Phone Number
+    = text_field :org, :phone, placeholder: '415-555-5555'
   .form-row
-    = label_tag :description, 'Description'
-    = text_area :organization, :description
-    .note A 3-5 sentence description of your organization.
+    %label
+      Mission
+      %strong *
+    = text_area :org, :summary, placeholder: 'itsyourdistrict.org is a comprehensive...'
+    .note A brief statement of your organization's Mission.
   .form-row
-    = label_tag :image, 'Image'
+    %label
+      Image
+      %strong *
     .form-link
       %span.file-name
       %a.select-file Select Image...

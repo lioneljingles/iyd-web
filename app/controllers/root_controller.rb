@@ -8,6 +8,7 @@ class RootController < ApplicationController
   end
   
   def contact
+    slug = params.has_key?(:slug) ? 'it-s-your-district' : params[:slug]
     @org = Organization.find_by_slug(params[:slug])
     render partial: 'contact'
   end

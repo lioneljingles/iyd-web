@@ -1,7 +1,10 @@
 require 'bcrypt'
 require 'securerandom'
+include Rails.application.routes.url_helpers
+
 
 class Organization < ActiveRecord::Base
+  
     
   has_and_belongs_to_many :tags
   has_many :images, dependent: :destroy
@@ -43,6 +46,10 @@ class Organization < ActiveRecord::Base
     self.website.gsub(/\Ahttps?:\/\//, '')
   end
   
+  def phone_number
+    
+  end
+  
   def reset_password
     self.reset_token = SecureRandom.uuid()
     if self.save
@@ -50,12 +57,30 @@ class Organization < ActiveRecord::Base
     end
   end
   
+  def self.page(row)
+    limit = row == 0 ? 4 : 3
+    offset = row == 0 ? 0 : 2 * row - 1
+    orgs = Organization.all.includes(:images).limit(limit).offset(offset)
+    page = []
+    orgs.each_with_index do |org, i|
+      page << {
+        name: org.name,
+        summary: org.summary,
+        image: org.images.first.image.url(i == 0 ? :large : :small),
+        path: org_slug_path(slug: org.slug),
+        contact: contact_path(slug: org.slug)
+      }
+    end
+    return page
+  end
+
   private
   
   def assign_defaults
     self.state = Organization::Role::NEW
     self.district = 6
     self.city = 'San Francisco'
+    self.state = 'CA'
     self.slug = self.name.parameterize
     if (self.website =~ /\Ahttps?/)
       self.website = 'http' + self.website

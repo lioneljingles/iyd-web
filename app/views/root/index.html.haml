@@ -7,8 +7,8 @@
         %li.login= link_to 'Login', login_path, remote: true
         %li.register= link_to 'Register', org_path, remote: true
         %li.org-link
-          = link_to '#' do
-            %span>= current_user.nil? ? '#' : current_user.name
+          %a
+            %span>= current_user.nil? ? '' : current_user.name
             's Page
         .clear
     #action
@@ -26,25 +26,25 @@
   .row{:'data-row' => 0}
     .tile.loading
       .cover.large
-        = link_to 'Title', '#', class: [:title]
+        %a.title Title
       .org-info
         %p.summary
         .center
-          = link_to 'More Info', '#', class: [:btn, :info]
-          = link_to 'Contact', '#', remote: true, class: [:btn, :contact]
+          %a.btn.info More Info
+          = link_to 'Contact', '', remote: true, class: [:btn, :contact]
   .row.template{:'data-row' => 0}
     .tile.col-1-2.loading
       .cover.small
-        = link_to 'Title', '#', class: [:title]
+        %a.title.info Title
       .org-info
         %p
           %span.summary
-          = link_to 'Learn more...', '#'
+          %a Learn more...
     .tile.col-1-2.loading
       .cover.small
-        = link_to 'Title', '#', class: [:title]
+        %a Title
       .org-info
         %p
           %span.summary
-          = link_to 'Learn more...', '#'
+          %a Learn more...
 .clear

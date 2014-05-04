@@ -9,6 +9,13 @@ window.App = {
     isValidUrl: (url) ->
       re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
       re.test(url)
+    
+    validPhone: (phone) ->
+      phone.replace(/\D/g, '')
+      if phone and phone.length > 7
+        phone
+      else
+        false
   
     isEmpty: (object) ->
       (i for own i of object).length == 0

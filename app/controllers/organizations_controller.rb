@@ -1,27 +1,20 @@
 class OrganizationsController < ApplicationController
   
   def list
-    
-    row = params[:row]
-    tag = params[:tag]
-    
-    debug_org = {
-      image: 'http://1.bp.blogspot.com/-f-KzlJE0ncU/TxGXIYMriII/AAAAAAAACXA/ddCZoDVUs_Y/s1600/Kitten+and+Puppy5.jpg', 
-      title: 'The puppy kitty committee', 
-      summary: 'An awesome group of amazing animals!',
-      path: '/org/something',
-      
-    }
-    
+    row = params[:row].to_i
+    tag = params.has_key?('tag') ? params[:tag] : nil
+    render_debug if params[:pups] == 'true'
+    if tag.blank?
+      orgs = Organization.page(row)
+    else
+      orgs = Tag.org_page(row)
+    end    
+    has_more = !(orgs.length or orgs.pop.nil?)
     render json: {
-      success: true, 
+      success: true,
       row: row,
-      has_more: true,
-      orgs: [
-        debug_org,
-        debug_org,
-        debug_org
-      ]
+      has_more: has_more,
+      orgs: orgs
     }
   end
   
@@ -106,7 +99,7 @@ class OrganizationsController < ApplicationController
   private
   
   def org_params
-    params.require(:organization).permit(
+    params.require(:org).permit(
       :email, 
       :password, 
       :password_confirmation, 
@@ -116,6 +109,16 @@ class OrganizationsController < ApplicationController
       :summary,
       :description
     )
+  end
+  
+  def render_debug
+    # Unused Template
+    debug_org = {
+      image: 'http://1.bp.blogspot.com/-f-KzlJE0ncU/TxGXIYMriII/AAAAAAAACXA/ddCZoDVUs_Y/s1600/Kitten+and+Puppy5.jpg', 
+      title: 'The puppy kitty committee', summary: 'An awesome group of amazing animals!', path: '/',
+    }
+  
+    render json: {success: true, row: row, has_more: true, orgs: [debug_org, debug_org, debug_org]}
   end
 
 end

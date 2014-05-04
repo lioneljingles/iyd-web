@@ -8,13 +8,17 @@ class CreateInitialTables < ActiveRecord::Migration
       t.string :password
       t.string :reset_token
       t.string :name, null: false
-      t.string :contact
-      t.string :phone
       t.text :summary, null: false
       t.text :description
       t.string :website
+      t.string :contact
+      t.string :phone
+      t.string :address_1
+      t.string :address_2
       t.string :district, null: false
       t.string :city, null: false
+      t.string :state, null: false
+      t.string :zip
       t.string :settings, null: false
       t.timestamps
     end

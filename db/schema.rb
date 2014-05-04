@@ -27,20 +27,23 @@ ActiveRecord::Schema.define(version: 20140419205050) do
   end
 
   create_table "organizations", force: true do |t|
-    t.integer  "state",       default: 1, null: false
-    t.string   "slug",                    null: false
-    t.string   "email",                   null: false
+    t.string   "state",       null: false
+    t.string   "slug",        null: false
+    t.string   "email",       null: false
     t.string   "password"
     t.string   "reset_token"
-    t.string   "name",                    null: false
-    t.string   "contact"
-    t.string   "phone"
-    t.text     "summary",                 null: false
+    t.string   "name",        null: false
+    t.text     "summary",     null: false
     t.text     "description"
     t.string   "website"
-    t.string   "district",                null: false
-    t.string   "city",                    null: false
-    t.string   "settings",                null: false
+    t.string   "contact"
+    t.string   "phone"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "district",    null: false
+    t.string   "city",        null: false
+    t.string   "zip"
+    t.string   "settings",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

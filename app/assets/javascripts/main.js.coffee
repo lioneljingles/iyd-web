@@ -61,6 +61,12 @@ $ ->
         errors[id] = 'Password and password confirmation don\'t match.'
       else if id == 'website' and not App.Utils.isValidUrl(value)
         errors[id] = 'Please enter a valid website URL.'
+      else if id == 'number'
+        value = value.replace(/[^\d.-]/g, '')
+        if value
+          $input.val(value)
+        else
+          errors[id] = 'Phone number is invalid.'
     if App.Utils.isEmpty(errors)
       true
     else
@@ -124,9 +130,10 @@ $ ->
           if i of data.orgs
             org = data.orgs[i]
             $cover = $tile.find('.cover').css('background-image': "url('#{org.image}')")
-            $cover.find('.title').text(org.title)
+            $cover.find('.title').text(org.name)
             $tile.find('.org-info .summary').text(org.summary)
-            $tile.find('a').attr(href: org.path)
+            $tile.find('a.button, a.title, a.info').attr(href: org.path)
+            $tile.find('a.contact').attr(href: org.contact)
             has_more = data.has_more
             loading_count--
           else
