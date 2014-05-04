@@ -2,7 +2,6 @@ require 'securerandom'
 
 tags = [
   'Art',
-  'Community',
   'Education', 
   'Environment',
   'Faith', 
@@ -15,10 +14,8 @@ tags = [
   'Safety',
   'Social Justice',
   'Tech',
-  'Transportation',
   'Violence Prevention',
-  'Youth',
-  'Other'
+  'Youth'
 ]
 
 for tag in tags
@@ -26,19 +23,19 @@ for tag in tags
 end
 
 orgs = [
-  {
-    email: 'itsyourdistrict@gmail.com',
-    name: 'It\'s Your District',
-    contact: 'Lionel Jingles',
-    phone: '415-902-3240',
-    summary: 'We launched!',
-    website: 'http://www.itsyourdistrict.org',
-    address_1: '123 Real St.',
-    address_2: '',
-    zip: '94107',
-    image_url: 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg',
-    tags: ['Community', 'Tech']
-  },
+  # {
+  #   email: 'itsyourdistrict@gmail.com',
+  #   name: 'It\'s Your District',
+  #   contact: 'Lionel Jingles',
+  #   phone: '415-902-3240',
+  #   summary: 'We launched!',
+  #   website: 'http://www.itsyourdistrict.org',
+  #   address_1: '123 Real St.',
+  #   address_2: '',
+  #   zip: '94107',
+  #   image_url: 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg',
+  #   tags: ['Community', 'Tech']
+  # },
   {
     email: 'kbaker@tndc.org',
     name: 'Tenderloin Neighborhood Development Corporation',
@@ -75,7 +72,7 @@ orgs = [
     address_1: '',
     address_2: '',
     zip: '',
-    image_url: 'http://www.evictiondefense.org/img/gallery/2007_volunteer_party/gallery_2.jpg',
+    image_url: 'http://sfbay.ca/home/wp-content/uploads/2012/04/IMG_4400-1000x563.jpg',
     tags: ['Education', 'Safety']
   },
   {
@@ -277,8 +274,6 @@ orgs = [
 
 for org in orgs
   
-  puts org[:name]
-  
   image_url = org.delete(:image_url)
   tags = org.delete(:tags)
   org.merge({
@@ -286,7 +281,7 @@ for org in orgs
   })
   organization = Organization.new(org)
   organization.images << Image.create(image: URI.parse(image_url))
-  organization.tags = Tag.find_all_by_name(tags)
+  organization.tags = Tag.where(name: tags)
   organization.save!
 end
   

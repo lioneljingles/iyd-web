@@ -8,6 +8,7 @@
   text-align: center;
   @include transition(background-color 0.25s linear);
   @include user-select-none;
+  border-radius: 2px;
 }
 
 .btn {
@@ -40,7 +41,7 @@
   min-width: 60px;
   background-color: $gray;
   margin: 4px;
-  padding: 4px 8px;
+  padding: 4px 5px 3px 5px;
   &:hover {
     background-color: darken($gray, 10%);
   }

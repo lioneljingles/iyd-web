@@ -210,13 +210,13 @@ blockquote {
 #content {
   width: $pageWidth;
   margin: 0 auto $pad auto;
-  padding: 40px $pad ($pad + $footerHeight) $pad;
+  padding: 20px $pad ($pad + $footerHeight) $pad;
 }
 
 [class*='col-'] {
   float: left;
   padding-right: $pad;
-  #content &:last-of-type {
+  #content &:last-of-type, #content &.last-col {
     padding-right: 0;
   }
 }

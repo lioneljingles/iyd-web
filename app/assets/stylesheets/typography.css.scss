@@ -8,7 +8,7 @@ body {
   color: $textGray;
 }
 
-h1, h2, h3, h4, h5, h6, .btn, .tag {
+h1, h2, h3, h4, h5, h6, .btn, .tag, .cover .title {
   font-family: $titleFontFamily;
   font-weight: normal;
 }
@@ -27,11 +27,13 @@ h1 {
 }
 
 h2, .cover.large .title {
+//  font-weight: bold;
   font-size: 1.5em;
   line-height: 1.2em;
 }
 
 h3, .cover.small .title {
+//  font-weight: bold;
   font-size: 1.2em;
   line-height: 1.2em;
 }
@@ -114,9 +116,9 @@ input, textarea, .dropdown {
 }
 
 hr {
-  margin: 10px auto;
+  margin: 0 auto;
   border: 0;
-  color: $gray;
-  background-color: $gray;
-  height: 1px;
+  color: $lightGray;
+  background-color: $lightGray;
+  height: 2px;
 }

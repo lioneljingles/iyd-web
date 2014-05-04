@@ -59,19 +59,23 @@ class Organization < ActiveRecord::Base
   
   def self.page(row)
     limit = row == 0 ? 4 : 3
-    offset = row == 0 ? 0 : 2 * row - 1
+    offset = row == 0 ? 0 : 2 * row + 1
     orgs = Organization.all.includes(:images).limit(limit).offset(offset)
     page = []
     orgs.each_with_index do |org, i|
-      page << {
-        name: org.name,
-        summary: org.summary,
-        image: org.images.first.image.url(i == 0 ? :large : :small),
-        path: org_slug_path(slug: org.slug),
-        contact: contact_path(slug: org.slug)
-      }
+      page << org.js_format(i)
     end
     return page
+  end
+  
+  def js_format(i)
+    {
+      name: self.name,
+      summary: self.summary,
+      image: self.images.first.image.url(i == 0 ? :large : :small),
+      path: org_slug_path(slug: self.slug),
+      contact: contact_path(slug: self.slug)
+    }
   end
 
   private

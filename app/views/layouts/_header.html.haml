@@ -3,16 +3,5 @@
     %ul
       %li#logo= link_to 'It\'s Your District', root_path
       %li.fb= link_to 'Visit us on Facebook!', 'https://www.facebook.com/itsyourdistrict', target: '_blank'      
-      - if current_user.nil?
-        %li.logout.hide= link_to 'Logout', logout_path, method: :delete, remote: true
-        %li.login= link_to 'Login', login_path, remote: true
-        %li.register= link_to 'Register', org_path, remote: true
-        %li.org-link.hide
-          %a
-      - else
-        %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true
-        %li.login.hide= link_to 'Login', login_path, remote: true
-        %li.register.hide= link_to 'Register', org_path, remote: true
-        %li.org-link= link_to current_user.name + "\'s Page", org_slug_path(current_user.slug)
           
       .clear

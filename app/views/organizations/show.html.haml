@@ -2,8 +2,9 @@
   - content_for(:notice) do
     %h2 Welcome to It's Your District!
     %p
-      You have signed up and your page is live. Feel free to share the URL:
-      = link_to org_slug_url(slug: @org.slug)
+      You have signed up and your page is live. 
+      / Feel free to share the URL:
+      / = link_to org_slug_path(@org.slug), org_slug_path(@org.slug)
     %p 
       If you have any questions, please
       = link_to "contact us!", contact_path + '?slug=it-s-your-district', remote: true
@@ -12,7 +13,7 @@
   .title= @org.name
   .tags
     - @org.tags.each do |tag|
-      .tag= tag.name
+      = link_to tag.name, root_path + '#' + tag.name, class: 'tag'
 
 .org-info
   .col-1-2
@@ -30,8 +31,8 @@
   .clear.buffer
 
   %h3 Mission
-  %p= @org.description
+  %p= @org.summary
   
   .buffer
   .center
-    = link_to "Contact #{@org.name}", contact_path + "?slug=#{@org.slug}", remote: true, class: :btn
+    = link_to "Contact", contact_path + "?slug=#{@org.slug}", remote: true, class: :btn

@@ -1,15 +1,20 @@
 class OrganizationsController < ApplicationController
   
+  include Rails.application.routes.url_helpers
+  
   def list
     row = params[:row].to_i
     tag = params.has_key?('tag') ? params[:tag] : nil
-    render_debug if params[:pups] == 'true'
+    if request.referer.include?('pups!')
+      render_debug(row)
+      return
+    end
     if tag.blank?
       orgs = Organization.page(row)
     else
-      orgs = Tag.org_page(row)
+      orgs = Tag.org_page(tag, row)
     end    
-    has_more = !(orgs.length or orgs.pop.nil?)
+    has_more = !(orgs.length < 3 or orgs.pop.nil?)
     render json: {
       success: true,
       row: row,
@@ -30,8 +35,8 @@ class OrganizationsController < ApplicationController
 
   def create
     org = Organization.new(org_params)
-    org.images << Image.new(params[:image].permit(:image)) if params.has_key?(:image)
-    org.tags = Tag.find_all_by_name(params.permit(:tags))
+    org.images << Image.new(params[:image].permit(:image)) if params.has_key?(:image)    
+    org.tags = Tag.where(name: params.permit(tags: [])[:tags])
     if org.save()
       redirect_to org_slug_path(slug: org.slug, welcome: true)
     else
@@ -111,13 +116,12 @@ class OrganizationsController < ApplicationController
     )
   end
   
-  def render_debug
-    # Unused Template
+  def render_debug(row)
+    # Debug Test Template
     debug_org = {
       image: 'http://1.bp.blogspot.com/-f-KzlJE0ncU/TxGXIYMriII/AAAAAAAACXA/ddCZoDVUs_Y/s1600/Kitten+and+Puppy5.jpg', 
-      title: 'The puppy kitty committee', summary: 'An awesome group of amazing animals!', path: '/',
+      name: 'The puppy kitty committee', summary: 'An awesome group of amazing animals!', path: '/',
     }
-  
     render json: {success: true, row: row, has_more: true, orgs: [debug_org, debug_org, debug_org]}
   end
 

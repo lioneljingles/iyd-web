@@ -108,7 +108,7 @@ $ ->
     else if $target.closest('li').hasClass('logout')
       $('header ul').removeClass('logged-in')
     else
-      $overlay.show('fast').find('.content').html(data)
+      $overlay.css(top: $(window).scrollTop() + 80).show('fast').find('.content').html(data)
   
   
   # INFINITE FRONT PAGE
@@ -118,12 +118,12 @@ $ ->
   
   $template = $(this).find('.row.template').clone()
   row = 0
-  tag_id = ''
   has_more = true
   loading_count = 1
+  tag = window.location.hash.substring(1)
   
-  addRow = (row) ->
-    $.get '/org-list', {row: row, tag_id: tag_id}, (data) ->
+  addRow = (count) ->
+    $.get '/org-list', {row: row, tag: tag}, (data) ->
       if (data.success == true)
         $main.find(".row[data-row='#{data.row}'] .tile").each (i, tile) ->
           $tile = $(tile).removeClass('loading')
@@ -137,10 +137,15 @@ $ ->
             has_more = data.has_more
             loading_count--
           else
-            $tile.remove()
+            if ($tile.hasClass('col-1-2') ? i < 2 : i < 1)
+              $tile.closest('.row').remove()
+            else
+              $tile.remove()
+            return false
   
   if $main.length > 0
     addRow(row)
+    $(window).scrollTop(0) if $(window).scrollTop() > 0
     $(window).on 'scroll.infinite', ->
       if has_more and loading_count < 5
         if $(window).scrollTop() + $(window).height() >= $footer.offset().top - 10
@@ -156,31 +161,43 @@ $ ->
   
   # TAG LOGIC
   
-    $('.tag').click ->
-      $tag = $(this)
-      if not $tag.hasClass('selected')
+  if tag
+    $('.tag').each (i, element) ->
+      $tag = $(element)
+      if $tag.text() == tag
         $('.tag.selected').removeClass('selected')
         $tag.addClass('selected')
+  
+  $('.tag').click ->
+    $tag = $(this)
+    if $tag.hasClass('selected')
+      return
+    else
+      $('.tag.selected').removeClass('selected')
+      $tag.addClass('selected')
       if $tag.hasClass('all')
-        tag_id = ''
+        tag = ''
+        window.location.hash = ''
       else
-        tag_id = $tag.attr('data-id')
-      $main.find('.row').each (i, row) ->
-        $row = $(row)
+        tag = $tag.text()
+        window.location.hash = '#' + tag
+      isComplete = false
+      $main.find('.row').each (i, element) ->
+        $row = $(element)
         if $row.attr('data-row') == '0'
           row = 0
           has_more = true
           loading_count = 1
-          addRow(row)
+          isComplete = true if i >= 2
           $row.find('.tile').addClass('loading').find('.cover').css('background-image': '')
         else
           $row.remove()
-
-
-
-
-
-
+      unless isComplete
+        $main.find('.row:gt(0)').remove()
+        $row = $template.clone()
+        $row.attr('data-row': row)
+        $main.append($row)
+      addRow(row)
 
 
 
