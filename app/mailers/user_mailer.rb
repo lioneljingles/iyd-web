@@ -16,7 +16,9 @@ class UserMailer < ActionMailer::Base
     end
   end
   
-  def contact(@email, @message, slug)
+  def contact(email, message, slug)
+    @email = email
+    @message = message
     @org = Organization.find_by_slug(slug)
     mail(:to => @org.email, :subject => 'Welcome to My Awesome Site')
   end
