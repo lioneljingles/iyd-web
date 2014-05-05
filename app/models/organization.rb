@@ -86,8 +86,8 @@ class Organization < ActiveRecord::Base
     self.city = 'San Francisco'
     self.state = 'CA'
     self.slug = self.name.parameterize
-    if (self.website =~ /\Ahttps?/)
-      self.website = 'http' + self.website
+    if not self.website =~ /\Ahttps?:\/\//
+      self.website = 'http://' + self.website
     end
     self.password = BCrypt::Password.create(self.password)
   end
