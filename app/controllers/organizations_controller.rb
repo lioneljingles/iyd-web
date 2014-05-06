@@ -15,7 +15,7 @@ class OrganizationsController < ApplicationController
       orgs = Tag.org_page(tag, row)
     end
     has_more = true
-    has_more = false if (row == 0 and orgs.length < 3) or (orgs.length < 2)
+    has_more = false if (row == 0 and orgs.length < 4) or (orgs.length < 3)
     if has_more and orgs.pop.nil?
       has_more = false
     end
