@@ -13,8 +13,12 @@ class OrganizationsController < ApplicationController
       orgs = Organization.page(row)
     else
       orgs = Tag.org_page(tag, row)
-    end    
-    has_more = !(orgs.length < 3 or orgs.pop.nil?)
+    end
+    has_more = true
+    has_more = false if (row == 0 and orgs.length < 3) or (orgs.length < 2)
+    if has_more and orgs.pop.nil?
+      has_more = false
+    end
     render json: {
       success: true,
       row: row,

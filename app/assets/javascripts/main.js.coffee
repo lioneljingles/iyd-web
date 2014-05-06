@@ -137,6 +137,7 @@ $ ->
             has_more = data.has_more
             loading_count--
           else
+            has_more = false
             if ((row == 0 and i == 1) or (row != 0 and i == 0))
               $tile.closest('.row').remove()
             else
@@ -154,8 +155,7 @@ $ ->
           $row = $template.clone()
           $row.attr('data-row': row)
           $main.append($row)
-          addRow(row)
-  
+          addRow(row)  
   
   # TAG LOGIC
   
