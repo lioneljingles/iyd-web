@@ -137,7 +137,7 @@ $ ->
             has_more = data.has_more
             loading_count--
           else
-            if ($tile.hasClass('col-1-2') ? i < 2 : i < 1)
+            if (row == 0 ? i < 2 : i < 1)
               $tile.closest('.row').remove()
             else
               $tile.remove()
