@@ -155,8 +155,6 @@ $ ->
           $row.attr('data-row': row)
           $main.append($row)
           addRow(row)
-      else if not has_more
-        $(window).off 'scroll.infinite'
   
   
   # TAG LOGIC
@@ -177,10 +175,9 @@ $ ->
       $tag.addClass('selected')
       if $tag.hasClass('all')
         tag = ''
-        window.location.hash = ''
       else
         tag = $tag.text()
-        window.location.hash = '#' + tag
+      window.location.hash = '#' + tag
       row = 0
       has_more = true
       loading_count = 1
