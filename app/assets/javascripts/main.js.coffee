@@ -182,10 +182,10 @@ $ ->
         tag = $tag.text()
         window.location.hash = '#' + tag
       isComplete = false
+      row = 0
       $main.find('.row').each (i, element) ->
         $row = $(element)
         if $row.attr('data-row') == '0'
-          row = 0
           has_more = true
           loading_count = 1
           isComplete = true if i >= 2

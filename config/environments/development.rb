@@ -14,8 +14,8 @@ IydWeb::Application.configure do
     address: "smtp.gmail.com",
     port: 587,
     domain: 'itsyourdistrict.org',
-    user_name: 'lionel@itsyourdistrict.org',
-    password: 'blackberries',
+    user_name: 'info@itsyourdistrict.org',
+    password: 'gr8BALLSofFIRE',
     authentication: 'plain',
     enable_starttls_auto: true
   }

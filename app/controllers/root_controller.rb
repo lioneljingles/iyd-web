@@ -16,6 +16,7 @@ class RootController < ApplicationController
   
   def sent
     UserMailer.contact(params[:email], params[:message], params[:slug])
+    render partial: 'sent'
   end
   
   def about

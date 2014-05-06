@@ -3,7 +3,7 @@ IydWeb::Application.routes.draw do
   root 'root#index'
   
   get 'contact', to: 'root#contact'
-  post 'contact', to: 'root#send'
+  post 'contact', to: 'root#sent'
   get 'about', to: 'root#about'
   
   get '/login',  to: 'sessions#new'

@@ -1,5 +1,5 @@
 %h2= "Contact #{@org.name}"
-= form_tag contact_path, id: 'contact' do
+= form_tag contact_path, id: 'contact', remote: true do
   = hidden_field_tag :slug, @org.slug
   .form-row
     = label_tag :email, 'Your E-mail address'
