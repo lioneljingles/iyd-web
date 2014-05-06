@@ -181,14 +181,14 @@ $ ->
       else
         tag = $tag.text()
         window.location.hash = '#' + tag
-      isComplete = false
       row = 0
+      has_more = true
+      loading_count = 1
+      isComplete = false
       $main.find('.row').each (i, element) ->
         $row = $(element)
         if $row.attr('data-row') == '0'
-          has_more = true
-          loading_count = 1
-          isComplete = true if i >= 2
+          isComplete = true if i == 2
           $row.find('.tile').addClass('loading').find('.cover').css('background-image': '')
         else
           $row.remove()
