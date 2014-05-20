@@ -10,7 +10,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   border-radius: 2px;
   background-color: #ffe;
   -webkit-appearance: none;
-  font: inherit;
+  font-family: inherit;
   color: inherit;
   @include placeholder($gray);
   &:focus {

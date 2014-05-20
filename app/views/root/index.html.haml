@@ -1,16 +1,7 @@
 - content_for(:header) do
   %header.landing
     .container
-      %ul{class: current_user.nil? ? '' : 'logged-in'}
-        %li.fb= link_to 'Visit us on Facebook!', 'https://www.facebook.com/itsyourdistrict', target: '_blank'      
-        / %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true
-        / %li.login= link_to 'Login', login_path, remote: true
-        / %li.register= link_to 'Register', org_path, remote: true
-        / %li.org-link
-        /   %a
-        /     %span>= current_user.nil? ? '' : current_user.name
-        /     's Page
-        .clear
+      = render 'layouts/nav'
     #action
       .logo It's Your District
       .text

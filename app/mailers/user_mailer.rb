@@ -20,7 +20,7 @@ class UserMailer < ActionMailer::Base
     @email = email
     @message = message
     @org = Organization.find_by_slug(slug)
-    mail(:to => @org.email, :subject => 'You have a message through It\'s Your District').deliver
+    mail(:to => @org.user.email, :subject => 'You have a message through It\'s Your District').deliver
   end
   
 end

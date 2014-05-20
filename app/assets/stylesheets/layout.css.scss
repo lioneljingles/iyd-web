@@ -21,6 +21,7 @@ body {
   min-height: 100%;
   background-color: white;
   .container {
+    position: relative;
     width: $pageWidth;
     margin: auto;
     padding: 0 $pad;
@@ -66,12 +67,20 @@ header {
   min-height: $headerHeight;
   background-color: $darkGray;
   ul {
+    a {
+      display: block;
+      background-color: transparent;
+      color: white;
+      &:link, &:visited, &:hover, &:active { color: white; }
+    }
+  }
+  ul.nav, ul.social {
     &.logged-in {
       li {
         &.register, &.login {
           display: none;
         }
-        &.logout, &.org-link {
+        &.user {
           display: block;
         }
       }
@@ -81,14 +90,25 @@ header {
       &.fb {
         float: left;
       }
-      &.logout, &.login {
+      &.login {
         margin-right: -20px;
       }
       &.register, &.login {
         display: block;
       }
-      &.logout, &.org-link {
-        display: none;
+      &.user {
+        .caret-up {
+          display: none;
+        }
+        &.selected {
+          background-color: $textGray;
+          .caret-up {
+            display: inline;
+          }
+          .caret-down {
+            display: none;
+          }
+        }
       }
       &#logo {
         float: left;
@@ -105,16 +125,26 @@ header {
         }
       }
       a {
-        display: block;
         height: $headerHeight;
         line-height: $headerHeight;
         padding: 0 20px;
-        cursor: pointer;
-        text-decoration: none;
-        background-color: transparent;
-        &:link, &:visited, &:hover, &:active { color: white; }
         &:hover {
           background-color: $textGray;
+        }
+      }
+    }
+  }
+  ul#user-menu {
+    display: none;
+    position: absolute;
+    top: $headerHeight;
+    right: 20px;
+    background-color: $textGray;
+    li {
+      a {
+        padding: 20px 20px;
+        &:hover {
+          background-color: black;
         }
       }
     }

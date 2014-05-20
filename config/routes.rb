@@ -18,6 +18,7 @@ IydWeb::Application.routes.draw do
   
   get '/org/:slug', to: 'organizations#show', as: :org_slug
   put '/org/:slug', to: 'organization#update'
+  get '/org/:slug/edit', to: 'organizations#edit', as: :org_edit
   
   get '/account/:slug/password', to: 'organization#password'
   put '/acount/:slug/password', to: 'organization#update_password'

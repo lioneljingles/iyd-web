@@ -23,8 +23,8 @@ class CreateInitialTables < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :organizations, :slug, :unique => true
-    add_index :organizations, :name, :unique => true
+    add_index :organizations, :slug,  unique: true
+    add_index :organizations, :name, unique: true
     
     create_table :tags do |t|
       t.string :name, null: false

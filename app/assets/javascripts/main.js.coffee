@@ -1,9 +1,10 @@
 $ ->
-  
+
   
   # JQUERY OBJECTS
   
   $overlay = $('#overlay')
+  $userMenu = $('header ul#user-menu')
   
   
   # FUNCTIONS
@@ -15,6 +16,20 @@ $ ->
   
   
   # INTERACTION EVENTS
+  
+  $('body').click (event) ->
+    if $userMenu.is(':visible')
+      $userMenu.slideUp('fast') 
+      $('header ul.nav li.user.selected').removeClass('selected')
+  
+  $('header ul.nav li.user a').click (event) ->
+    $li = $(this).closest('li')
+    if $li.hasClass('selected')
+      $li.removeClass('selected')
+    else
+      $li.addClass('selected')
+      event.stopPropagation()
+      $userMenu.slideDown('fast')
   
   $overlay.on 'click', '.close', ->
     $overlay.hide 'fast', ->

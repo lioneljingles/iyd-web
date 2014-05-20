@@ -1,13 +1,16 @@
-- if @welcome
+- if @org_url
   - content_for(:notice) do
     %h2 Welcome to It's Your District!
-    %p
-      You have signed up and your page is live. 
-      / Feel free to share the URL:
-      / = link_to org_slug_path(@org.slug), org_slug_path(@org.slug)
     %p 
       If you have any questions, please
-      = link_to "contact us!", contact_path + '?slug=it-s-your-district', remote: true
+      = link_to "contact us.", contact_path + '?slug=it-s-your-district', remote: true
+      
+- if @is_owner
+  - content_for(:notice) do
+    %p
+      You are the owner of this page. Click the button below to update your organization's information.
+    .center
+      = link_to "Edit Details", org_edit_path(@org.slug), remote: true, class: :btn
 
 .cover.large{style: "background-image: url(#{@org.images.first.image.url});"}
   .title= @org.name
@@ -25,8 +28,8 @@
   .col-1-2
     %h3 Contact
     %ul
-      %li= @org.contact
-      %li=mail_to @org.email
+      %li= @org.user.name
+      %li=mail_to @org.user.email
 
   .clear.buffer
 

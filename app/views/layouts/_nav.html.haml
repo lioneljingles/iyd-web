@@ -1,0 +1,21 @@
+- user = current_user
+
+%ul.nav{class: user.nil? ? '' : 'logged-in'}
+  %li.login= link_to 'Login', login_path, remote: true
+  %li.register= link_to 'Register', org_path, remote: true
+  %li.user
+    %a
+      = user.nil? ? '' : user.name
+      &nbsp;
+      %span.caret-up &and;
+      %span.caret-down &or;
+  .clear
+
+%ul#user-menu
+  %li.org-link
+    %a{href: user.nil? ? '' : user.organization.profile}
+      %span>= user.nil? ? '' : user.organization.name
+      's Page
+  %li.settings
+    %a User Settings
+  %li= link_to 'Logout', logout_path, method: :delete, remote: true

@@ -77,9 +77,12 @@ strong, .highlight {
 
 input, textarea, .dropdown {
   -webkit-font-smoothing: antialiased;
-  font-size: 1.2em;
   font: inherit;
   color: inherit;
+}
+
+textarea {
+  font-size: 0.8em;
 }
 
 .note {
@@ -122,3 +125,5 @@ hr {
   background-color: $lightGray;
   height: 2px;
 }
+
+

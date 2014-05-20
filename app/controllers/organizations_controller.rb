@@ -1,7 +1,5 @@
 class OrganizationsController < ApplicationController
-  
-  include Rails.application.routes.url_helpers
-  
+    
   def list
     row = params[:row].to_i
     tag = params.has_key?('tag') ? params[:tag] : nil
@@ -28,8 +26,11 @@ class OrganizationsController < ApplicationController
   end
   
   def show
-    @welcome = params.has_key?(:welcome)
     @org = Organization.includes(:images, :tags).find_by_slug(params[:slug])
+    @is_owner = current_user == @org.user
+    if @is_owner and params.has_key?(:welcome)
+      @org_url = request.protocol + request.host + @org.profile
+    end
   end
   
   def new
@@ -42,7 +43,7 @@ class OrganizationsController < ApplicationController
     org.images << Image.new(params[:image].permit(:image)) if params.has_key?(:image)    
     org.tags = Tag.where(name: params.permit(tags: [])[:tags])
     if org.save()
-      redirect_to org_slug_path(slug: org.slug, welcome: true)
+      redirect_to org.profile({welcome: true})
     else
       @errors = {}
       for field, message in org.errors
@@ -53,55 +54,23 @@ class OrganizationsController < ApplicationController
     end
   end
   
-  def details
+  def edit
+    @tags = Tag.all
     @org = Organization.find_by_slug(params[:slug])
-    render partial: 'details'
+    render partial: 'edit'
   end
   
-  def update_details
+  def update
     org = Organization.find_by_slug(params[:slug])
     if org.update(org_params)
-      redirect_to org_slug_path(slug: org.slug, updated: true)
+      redirect_to org.profile({update: true})
     else
       @errors = {}
       for field, message in org.errors
         @errors['organization_' + field.to_s] = message
       end
       @tags = Tag.all
-      render '_details'
-    end
-  end
-  
-  def password
-    @token = params[:token]
-    if @token
-      @org = Organization.find_by_reset_token(@token)
-      if @org.nil?
-        render '_not_found'
-      else
-        render '_password'
-      end
-    else
-      @org = current_user
-      if @org.nil?
-        render partial: 'password'
-      else
-        render partial: 'not_found'
-      end
-    end
-  end
-  
-  def update_password
-    org = Organization.find_by_slug(params[:slug])
-    if org.update(org_params)
-      redirect_to org_slug_path(slug: org.slug, updated: true)
-    else
-      @errors = {}
-      for field, message in org.errors
-        @errors['organization_' + field.to_s] = message
-      end
-      @tags = Tag.all
-      render '_password'
+      render '_edit'
     end
   end
   

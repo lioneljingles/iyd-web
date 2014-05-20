@@ -5,7 +5,6 @@ class RootController < ApplicationController
   
   def index
     @tags = Tag.all
-    @org = Organization.first
   end
   
   def contact

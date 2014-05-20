@@ -18,11 +18,13 @@ tags = [
   'Youth'
 ]
 
+Tag.all.each{|tag| tag.destroy}
+
 for tag in tags
   Tag.create(name: tag)
 end
 
-orgs = [
+list = [
   # {
   #   email: 'itsyourdistrict@gmail.com',
   #   name: 'It\'s Your District',
@@ -272,17 +274,25 @@ orgs = [
   }
 ]
 
-for org in orgs
-  
-  image_url = org.delete(:image_url)
-  tags = org.delete(:tags)
-  org.merge({
+for fields in list
+  user = User.create({
+    email: fields[:email],
+    name: fields[:contact],
     password: SecureRandom.base64(12)
   })
-  organization = Organization.new(org)
-  organization.images << Image.create(image: URI.parse(image_url))
-  organization.tags = Tag.where(name: tags)
-  organization.save!
+  org = Organization.new({
+    name: fields[:name],
+    phone: fields[:phone],
+    summary: fields[:summary],
+    website: fields[:website],
+    address_1: fields[:address_1],
+    address_2: fields[:address_2],
+    zip: fields[:zip]
+  })
+  org.images << Image.create(image: URI.parse(fields[:image_url]))
+  org.tags = Tag.where(name: fields[:tags])
+  org.user = user
+  org.save!
 end
   
   

@@ -1,21 +1,27 @@
 class SessionsController < ApplicationController
-    
+
+  include Rails.application.routes.url_helpers
+
   def new
     render partial: 'new'
   end
 
   def create
-    user = Organization.authenticate(params[:email], params[:password])
+    user = User.authenticate(params[:email], params[:password])
     if user.nil?
       render json: {success: false}
     else
-      session[:user] = user
-      render json: {success: true, name: user.name, url: org_slug_path(user)}
+      session[:user_id] = user.id
+      render json: {
+        success: true, 
+        name: user.organization.name, 
+        url: user.organization.profile
+      }
     end
   end
 
   def destroy
-    session[:user] = nil
+    session[:user_id] = nil
     render json: {success: true}
   end
   
