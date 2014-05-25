@@ -12,42 +12,41 @@
   - else
     %p.error There are problems with your registration form. Please fix the errors below and try again.
   .form-row
+    %label 
+      Contact Name
+      %strong *
+    = text_field :user, :name, placeholder: 'Jane Doe'
+  .form-row
     %label
       Email
       %strong *
-    = text_field :org, :email, placeholder: 'myname@mywebsite.com'
-    .note This email will be used for contact and login purposes.
+    = text_field :user, :email, placeholder: 'myname@mywebsite.com'
   .form-row
     %label
       Password
       %strong *
-    = password_field :org, :password
+    = password_field :user, :password
   .form-row
     %label
       Password Confirmation
       %strong *
-    = password_field :org, :password_confirmation
+    = password_field :user, :password_confirmation
   .form-row
     %label
-      Name
+      Organization Name
       %strong *
     = text_field :org, :name, placeholder: 'My Organization'
-    .note The name of your organization.
-  .form-row
-    %label Contact
-    = text_field :org, :contact, placeholder: 'Jane Doe'
-    .note The contact person.
   .form-row
     %label Website
-    = text_field :org, :website, placeholder: 'www.mywebsite.com'
+    = text_field :org, :website, placeholder: 'www.mywebsite.com', :'data-optional' => true
   .form-row
     %label Phone Number
-    = text_field :org, :phone, placeholder: '415-555-5555'
+    = text_field :org, :phone, placeholder: '415-555-5555', :'data-optional' => true
   .form-row
     %label
       Mission
       %strong *
-    = text_area :org, :summary, placeholder: 'itsyourdistrict.org is a comprehensive...'
+    = text_area :org, :summary, placeholder: 'It\'s Your District is a comprehensive...'
     .note A brief statement of your organization's Mission.
   .form-row
     %label

@@ -97,6 +97,7 @@ header {
         display: block;
       }
       &.user {
+        display: none;
         .caret-up {
           display: none;
         }

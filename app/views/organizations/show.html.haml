@@ -12,7 +12,7 @@
     .center
       = link_to "Edit Details", org_edit_path(@org.slug), remote: true, class: :btn
 
-.cover.large{style: "background-image: url(#{@org.images.first.image.url});"}
+.cover.large{style: "background-image: url(#{@org.images.last.image.url});"}
   .title= @org.name
   .tags
     - @org.tags.each do |tag|

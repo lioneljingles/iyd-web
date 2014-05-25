@@ -2,40 +2,32 @@
   :javascript
     App.errors = #{@errors.to_json}
 
-%h2 Register Organization
+%h2 Organization Settings
 = form_tag org_slug_path(@org.slug), method: :put, multipart: true do
-  - if not @errors or @errors.empty?
-    %p 
-      Fields marked
-      %strong *
-      are required.
-  - else
+  - if @errors and @errors.empty?
     %p.error There are problems with your registration form. Please fix the errors below and try again.
   .form-row
     %label
       Name
-      %strong *
     = text_field :org, :name, placeholder: 'My Organization', value: @org.name
   .form-row
     %label Website
     = text_field :org, :website, placeholder: 'www.mywebsite.com', value: @org.website
   .form-row
     %label Phone Number
-    = text_field :org, :phone, placeholder: '415-555-5555', value: @org.phone
+    = text_field :org, :phone, placeholder: '415-555-5555', value: @org.phone, :'data-optional' => true
   .form-row
     %label
       Mission
-      %strong *
     = text_area :org, :summary, placeholder: 'itsyourdistrict.org is a comprehensive...', value: @org.summary
   .form-row
     %label
       Image
-      %strong *
     .form-link
       %span.file-name
       %a.select-file Select Image...
-    = file_field :image, :image
-    .note This will replace the organization's existing image.
+    = file_field :image, :image, :'data-optional' => true
+    .note This will replace your organization's existing image.
   .form-row
     = label_tag :tags
     .clear

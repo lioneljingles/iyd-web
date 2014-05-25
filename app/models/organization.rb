@@ -59,7 +59,7 @@ class Organization < ActiveRecord::Base
     {
       name: self.name,
       summary: self.summary,
-      image: self.images.first.image.url(i == 0 ? :large : :small),
+      image: self.images.last.image.url(i == 0 ? :large : :small),
       path: self.profile,
       contact: self.contact
     }

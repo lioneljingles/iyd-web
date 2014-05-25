@@ -8,23 +8,21 @@ IydWeb::Application.routes.draw do
   
   get '/login',  to: 'sessions#new'
   post '/login',  to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
-  get '/reset', to: 'sessions#reset'
+  delete '/logout', to: 'sessions#destroy'  
   
   get '/org-list', to: 'organizations#list'
-  
   get '/org', to: 'organizations#new'
   post '/org', to: 'organizations#create'
-  
   get '/org/:slug', to: 'organizations#show', as: :org_slug
-  put '/org/:slug', to: 'organization#update'
+  put '/org/:slug', to: 'organizations#update'
   get '/org/:slug/edit', to: 'organizations#edit', as: :org_edit
   
-  get '/account/:slug/password', to: 'organization#password'
-  put '/acount/:slug/password', to: 'organization#update_password'
-  get '/account/:slug/details', to: 'organization#details'
-  put '/account/:slug/details', to: 'organization#update_details'
-  
+  get '/account/', to: 'accounts#edit'
+  put '/account/', to: 'accounts#update'
+  get '/account/password', to: 'accounts#edit_password'
+  put '/account/password', to: 'accounts#update_password'
+  get '/account/reset', to: 'accounts#reset_password'
+    
   get "*a", :to => 'root#missing'
   
 end

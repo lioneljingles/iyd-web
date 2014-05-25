@@ -4,6 +4,7 @@ $ ->
   # JQUERY OBJECTS
   
   $overlay = $('#overlay')
+  $nav = $('header ul.nav')
   $userMenu = $('header ul#user-menu')
   
   
@@ -20,9 +21,9 @@ $ ->
   $('body').click (event) ->
     if $userMenu.is(':visible')
       $userMenu.slideUp('fast') 
-      $('header ul.nav li.user.selected').removeClass('selected')
+      $nav.find('li.user.selected').removeClass('selected')
   
-  $('header ul.nav li.user a').click (event) ->
+  $nav.find('li.user a').click (event) ->
     $li = $(this).closest('li')
     if $li.hasClass('selected')
       $li.removeClass('selected')
@@ -57,36 +58,34 @@ $ ->
   
   # FORM VALIDATIONS
   
-  $('body').on 'submit', 'form', ->
+  $('body').on 'submit', 'form', (event) ->
     $form = $(this)
     errors = {}
     $form.find('.form-row div.error').remove()
     $form.find('input, textarea').each (index, input) ->
       $input = $(input)
-      id = $input.attr('id')
+      id = $input.attr('id') || ''
       value = $input.val()
       $input.removeClass('error')
-      if value.replace(/\s+/g, '') == ''
+      if value.replace(/\s+/g, '') == '' and not $input.attr('data-optional')
         errors[id] = 'Field cannot be blank.'
-      else if id == 'email' and not App.Utils.isValidEmail(value)
+      else if id.indexOf('email') >= 0 and not App.Utils.isValidEmail(value)
         errors[id] = 'Please enter a valid email address.'
-      else if id == 'password' and value.length < 6
+      else if id.indexOf('password') >= 0 and value.length < 6
         errors[id] = 'Your password must have at least 6 characters.'
-      else if id == 'password_confirmation' and value != $form.find('input#password')
+      else if id.indexOf('password_confirmation') >= 0 and value != $form.find('input[id*="_password"]').val()
         errors[id] = 'Password and password confirmation don\'t match.'
-      else if id == 'website' and not App.Utils.isValidUrl(value)
+      else if id.indexOf('website') >= 0 and not (App.Utils.isValidUrl(value) or '')
         errors[id] = 'Please enter a valid website URL.'
-      else if id == 'number'
+      else if id.indexOf('number') >= 0
         value = value.replace(/[^\d.-]/g, '')
         if value
           $input.val(value)
         else
           errors[id] = 'Phone number is invalid.'
-    if App.Utils.isEmpty(errors)
-      true
-    else
+    unless App.Utils.isEmpty(errors)
       showFormErrors($form, errors)
-      false
+      event.preventDefault()
     
   unless App.Utils.isEmpty(App.errors)
     showFormErrors($('form').first(), App.errors)
@@ -97,7 +96,7 @@ $ ->
   $('body').on 'click', 'a[data-remote="true"]', (event) ->
     $target = $(this)
     message = ''
-    if $target.hasClass('register') and $('header ul li.logout:visible').length > 0
+    if $target.hasClass('register') and $nav.find('li.logout:visible').length > 0
       message = 'You must log out before registering.'
     if $target.attr('id') == 'reset-password'
       email = $overlay.find('form input#email').val()
@@ -114,14 +113,15 @@ $ ->
     $target = $(event.target)
     if $target.attr('id') == 'login-form'
       if data.success == true
-        $('header ul').addClass('logged-in')
-        $('header li.org-link a').attr(href: data.url).find('span').text(data.name)
+        $nav.addClass('logged-in')
+        $userMenu.find('li.org-link a').attr(href: data.url).find('span').text(data.org)
+        $nav.find('li.user span.email').text(data.email)
         $overlay.hide 'fast', ->
           $(this).find('.content').empty()
       else
         $(this).find('.error').show('fast')
     else if $target.closest('li').hasClass('logout')
-      $('header ul').removeClass('logged-in')
+      $nav.removeClass('logged-in')
     else
       $overlay.css(top: $(window).scrollTop() + 80).show('fast').find('.content').html(data)
   

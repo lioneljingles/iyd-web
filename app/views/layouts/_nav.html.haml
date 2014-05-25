@@ -5,7 +5,8 @@
   %li.register= link_to 'Register', org_path, remote: true
   %li.user
     %a
-      = user.nil? ? '' : user.name
+      %span.email
+        = user.nil? ? '' : user.email
       &nbsp;
       %span.caret-up &and;
       %span.caret-down &or;
@@ -16,6 +17,6 @@
     %a{href: user.nil? ? '' : user.organization.profile}
       %span>= user.nil? ? '' : user.organization.name
       's Page
-  %li.settings
-    %a User Settings
-  %li= link_to 'Logout', logout_path, method: :delete, remote: true
+  %li.settings= link_to 'User Settings', account_path, remote: true
+  %li.password= link_to 'Change Password', account_password_path, remote: true
+  %li.logout= link_to 'Logout', logout_path, method: :delete, remote: true

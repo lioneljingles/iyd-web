@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
 
-  include Rails.application.routes.url_helpers
-
   def new
     render partial: 'new'
   end
@@ -14,7 +12,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       render json: {
         success: true, 
-        name: user.organization.name, 
+        email: user.email,
+        org: user.organization.name, 
         url: user.organization.profile
       }
     end
@@ -27,12 +26,6 @@ class SessionsController < ApplicationController
   
   def register
     render partial: 'register'
-  end
-  
-  def reset
-    user = Organization.find_by_email(params[:email])
-    user.reset_password unless user.nil?
-    render partial: 'reset'
   end
 
 end

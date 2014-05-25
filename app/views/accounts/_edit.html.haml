@@ -1,0 +1,19 @@
+- content_for(:js) do
+  :javascript
+    App.errors = #{@errors.to_json}
+
+%h2 User Settings
+= form_tag account_path, method: :put, multipart: true do
+  - if @errors and not @errors.empty?
+    %p.error There are problems with your form. Please fix the errors below and try again.
+  .form-row
+    %label
+      Name
+    = text_field :user, :name, value: @user.name
+  .form-row
+    %label Email
+    = text_field :user, :email, value: @user.email
+  / .form-row
+  /   = check_box_tag "settings[intro_emails]", true, @user.settings['intro_emails'] == 'true', name: 'settings[]'
+  /   Receive email introductions to prospective volunteers.
+  = submit_tag "Save", class: [:btn, :'form-submit']

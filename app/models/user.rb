@@ -22,11 +22,19 @@ class User < ActiveRecord::Base
   def self.authenticate(email, password)
     user = User.find_by_email(email)
     unless user.nil?
-      if BCrypt::Password.new(user.password).is_password? password
+      if user.verify_password(password)
         return user
       end
     end
     return nil
+  end
+  
+  def verify_password(password)
+    return BCrypt::Password.new(self.password).is_password? password
+  end
+  
+  def update_password(password)
+    self.password = BCrypt::Password.create(password)
   end
     
   def reset_password

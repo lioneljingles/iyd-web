@@ -85,7 +85,7 @@ label {
 .form-row {
   clear: both;
   margin-bottom: 20px;
-  .note, .error {
+  .note {
     margin-left: 255px;
   }
   &.single {
@@ -107,12 +107,12 @@ label {
       margin-right: 16px;
     }
     input:last-child, .form-select:last-child {
-      width: 2$formElementHeight;
+      width: $formElementHeight;
     }
   }
   &.third-last {
     input:first-child, .form-select:first-child {
-      width: 2$formElementHeight;
+      width: $formElementHeight;
       margin-right: 16px;
     }
     input:last-child, .form-select:last-child {
@@ -134,6 +134,12 @@ label {
     display: inline-block;
     height: $formElementHeight;
     line-height: $formElementHeight;
+  }
+  .field_with_errors {
+    display: inline-block;
+    .note {
+      margin-left: 0;
+    }
   }
 }
 .form-submit {

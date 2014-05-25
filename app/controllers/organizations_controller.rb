@@ -34,24 +34,49 @@ class OrganizationsController < ApplicationController
   end
   
   def new
-    @tags = Tag.all
-    render partial: 'new'
+    if current_user.nil?
+      @tags = Tag.all
+      render partial: 'new'
+    else
+      render partial: 'logged_in'
+    end
   end
 
   def create
+    
+    @errors = {}
+    
+    user = User.new(params.require(:user).permit(:email, :name, :password, :password_confirmation))
+    if not user.save()
+      for field, message in user.errors
+        @errors['user_' + field.to_s] = message.capitalize
+      end
+      return
+    end
+    
+    image = Image.create!(params[:image].permit(:image))
+    if not image.save()
+      for field, message in user.errors
+        @errors['image_' + field.to_s] = message.capitalize
+      end
+      return
+    end
+    
     org = Organization.new(org_params)
-    org.images << Image.new(params[:image].permit(:image)) if params.has_key?(:image)    
+    org.user = user
+    org.images << image
     org.tags = Tag.where(name: params.permit(tags: [])[:tags])
     if org.save()
       redirect_to org.profile({welcome: true})
     else
-      @errors = {}
       for field, message in org.errors
-        @errors['organization_' + field.to_s] = message
+        @errors['organization_' + field.to_s] = message.capitalize
       end
+      session[:user_id] = user.id
       @tags = Tag.all
       render '_new'
     end
+    
   end
   
   def edit
@@ -62,6 +87,10 @@ class OrganizationsController < ApplicationController
   
   def update
     org = Organization.find_by_slug(params[:slug])
+    if params.has_key?(:image)
+      image = Image.create!(params[:image].permit(:image))
+      org.images << image
+    end
     if org.update(org_params)
       redirect_to org.profile({update: true})
     else
@@ -78,11 +107,7 @@ class OrganizationsController < ApplicationController
   
   def org_params
     params.require(:org).permit(
-      :email, 
-      :password, 
-      :password_confirmation, 
       :name,
-      :contact,
       :website,
       :summary,
       :description
