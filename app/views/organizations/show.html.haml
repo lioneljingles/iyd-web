@@ -38,4 +38,4 @@
   
   .buffer
   .center
-    = link_to "Contact", contact_path + "?slug=#{@org.slug}", remote: true, class: :btn
+    = link_to "Contact", @org.contact, remote: true, class: :btn
