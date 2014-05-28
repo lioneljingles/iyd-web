@@ -20,18 +20,8 @@ class AccountsController < ApplicationController
   end
   
   def edit_password
-    if params.has_key?(:token)
-      session[:user_id] = nil if current_user
-      @user = User.find_by_reset_token(params[:token])
-      if @user.nil?
-        render 'invalid_token'
-      else
-        render '_edit_password'
-      end
-    else
-      @user = current_user
-      render partial: 'edit_password'
-    end
+    @user = current_user
+    render partial: 'edit_password'
   end
   
   def update_password
@@ -52,11 +42,38 @@ class AccountsController < ApplicationController
     end
   end
   
-  def reset_password
+  def send_reset
     session[:user_id] = nil if current_user
     user = User.find_by_email(params[:email])
-    user.reset_password unless user.nil?
-    render partial: 'reset_password'
+    user.send_reset unless user.nil?
+    render partial: 'send_reset'
+  end
+  
+  def process_reset
+  end
+  
+  def complete_reset
+    @user = User.find_by_reset_token(params[:token])
+    if @user.nil?
+      render 'invalid_token'
+    else
+      @user.update_password(params[:user][:password])
+      if @user.save
+        session[:user_id] = @user.id
+        redirect_to Rails.application.routes.url_helpers.root_path
+      else
+        @errors = {}
+        for field, message in @user.errors
+          @errors['user_' + field.to_s] = message
+        end
+        render 'process_reset'
+      end
+    end
   end
 
 end
+
+
+
+
+

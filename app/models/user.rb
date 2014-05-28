@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     self.password = BCrypt::Password.create(password)
   end
     
-  def reset_password    
+  def send_reset
     self.reset_token = SecureRandom.uuid()
     if self.save
       UserMailer.reset_instructions(self.id)
@@ -46,12 +46,16 @@ class User < ActiveRecord::Base
   end
   
   def reset_url
-    Rails.application.config.url_base + account_password_path(token: self.reset_token)
+    Rails.application.config.url_base + account_reset_token_path(self.reset_token)
   end
 
   private
   
   def assign_defaults
+    
+    # TODO: Remove if unnecessary!
+    self.reset_token = SecureRandom.uuid()
+    
     self.role = User::Role::USER
     self.password = BCrypt::Password.create(self.password)
   end

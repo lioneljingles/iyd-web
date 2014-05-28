@@ -10,11 +10,19 @@ class CreateUsersTable < ActiveRecord::Migration
       t.timestamps
     end
     
-    
-    Organization.all.each{|org| org.destroy}
-    
     add_column :organizations, :user_id, :integer
     add_column :organizations, :visibility, :integer
+    
+    Organization.all.each do |org|
+      org.user = User.create!({
+        email: org.email,
+        name: org.contact,
+        password: SecureRandom.base64(12)
+      })
+      org.visibility = Organization::Visibility::PUBLIC
+      org.save!
+    end
+    
     remove_column :organizations, :email, :string
     remove_column :organizations, :password, :string
     remove_column :organizations, :reset_token, :string 

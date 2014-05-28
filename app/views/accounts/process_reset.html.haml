@@ -3,18 +3,15 @@
     App.errors = #{@errors.to_json}
 
 %h2 Update Password
-- if @token
-  %p Please update your password then login normally.
+%p Please enter a new password for your account.
+
 = form_tag '', method: :put do
   - if @errors and not @errors.empty?
     %p.error There are problems with the form. Please fix the errors below and try again.
   .form-row
-    = label_tag :current_password
-    = password_field :user, :current
-  .form-row
-    = label_tag :new_password
+    = label_tag :password
     = password_field :user, :password
   .form-row
-    = label_tag :new_password_confirmation
+    = label_tag :password_confirmation
     = password_field :user, :password_confirmation
   = submit_tag "Update", class: [:btn, :'form-submit']

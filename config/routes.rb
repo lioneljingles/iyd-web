@@ -21,7 +21,9 @@ IydWeb::Application.routes.draw do
   put '/account/', to: 'accounts#update'
   get '/account/password', to: 'accounts#edit_password'
   put '/account/password', to: 'accounts#update_password'
-  get '/account/reset', to: 'accounts#reset_password'
+  get '/account/reset', to: 'accounts#send_reset'
+  get '/account/reset/:token', to: 'accounts#process_reset', as: :account_reset_token
+  put '/account/reset/:token', to: 'accounts#complete_reset'
     
   get "*a", :to => 'root#missing'
   
