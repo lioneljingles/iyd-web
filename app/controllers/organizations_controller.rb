@@ -38,7 +38,7 @@ class OrganizationsController < ApplicationController
       @tags = Tag.all
       render partial: 'new'
     else
-      render partial: 'logged_in'
+      render partial: 'accounts/logged_in'
     end
   end
 

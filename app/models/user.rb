@@ -8,10 +8,11 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, uniqueness: true, confirmation: true
-  validates :name, presence: true, uniqueness: true  
+  validates :name, presence: true, uniqueness: true
   serialize :settings, JSON
   
   before_validation :assign_defaults, on: :create
+  after_create :send_welcome
   
   module Role
     REMOVED = -1
@@ -37,11 +38,15 @@ class User < ActiveRecord::Base
     self.password = BCrypt::Password.create(password)
   end
     
-  def reset_password
+  def reset_password    
     self.reset_token = SecureRandom.uuid()
     if self.save
       UserMailer.reset_instructions(self.id)
     end
+  end
+  
+  def reset_url
+    Rails.application.config.url_base + account_password_path(token: self.reset_token)
   end
 
   private
@@ -49,6 +54,10 @@ class User < ActiveRecord::Base
   def assign_defaults
     self.role = User::Role::USER
     self.password = BCrypt::Password.create(self.password)
+  end
+  
+  def send_welcome
+    UserMailer.welcome(self.id)
   end
   
 end

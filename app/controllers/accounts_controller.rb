@@ -20,8 +20,18 @@ class AccountsController < ApplicationController
   end
   
   def edit_password
-    @user = current_user
-    render partial: 'edit_password'
+    if params.has_key?(:token)
+      session[:user_id] = nil if current_user
+      @user = User.find_by_reset_token(params[:token])
+      if @user.nil?
+        render 'invalid_token'
+      else
+        render '_edit_password'
+      end
+    else
+      @user = current_user
+      render partial: 'edit_password'
+    end
   end
   
   def update_password
@@ -46,7 +56,7 @@ class AccountsController < ApplicationController
     session[:user_id] = nil if current_user
     user = User.find_by_email(params[:email])
     user.reset_password unless user.nil?
-    render partial: 'reset'
+    render partial: 'reset_password'
   end
 
 end

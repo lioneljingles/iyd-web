@@ -9,6 +9,8 @@ IydWeb::Application.configure do
   config.active_record.migration_error = :page_load
   config.assets.debug = true
   
+  config.url_base = "http://itsyourdistrict.org"
+  
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
@@ -19,4 +21,5 @@ IydWeb::Application.configure do
     authentication: 'plain',
     enable_starttls_auto: true
   }
+  
 end

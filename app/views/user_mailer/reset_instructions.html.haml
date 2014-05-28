@@ -1,6 +1,6 @@
-%p Hi #{@org.contact}!
+%p Hi #{@user.name}!
 
 %p A password reset has been requested for this It's Your District account. If you did not request it, Please ignore this message.
 
 %p If you would like to reset your password, please follow the following link and choose a new password:
-%p= link_to org_password_path(token: @org.token)
+%p= link_to @user.reset_url, @user.reset_url

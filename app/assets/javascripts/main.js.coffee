@@ -101,7 +101,7 @@ $ ->
     if $target.attr('id') == 'reset-password'
       email = $overlay.find('form input#email').val()
       if App.Utils.isValidEmail(email)
-        $target.attr(href: $target.attr('href') + '?email=' + email)
+        $target.attr(href: $target.attr('href') + '?email=' + encodeURIComponent(email))
       else
         message = 'Please enter your e-mail address to reset your password.'
     if message
