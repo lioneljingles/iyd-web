@@ -24,6 +24,9 @@ IydWeb::Application.routes.draw do
   get '/account/reset', to: 'accounts#send_reset'
   get '/account/reset/:token', to: 'accounts#process_reset', as: :account_reset_token
   put '/account/reset/:token', to: 'accounts#complete_reset'
+  
+  get '/admin', to: 'admin#index'
+  get '/admin/impersonate/:id', to: 'admin#impersonate', as: :admin_impersonate
     
   get "*a", :to => 'root#missing'
   

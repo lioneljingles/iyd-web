@@ -1,0 +1,6 @@
+%h2= "Administrator Functions"
+%p You are an administrator of It's Your District. Click on a link below to login as that user. You will be able to edit the user's settings. In order to get back to this view, you will need to sign out and sign back in as an admin.
+
+%ul
+  - for user in @users do
+    %li= link_to user.name + ' - ' + user.organization.name, admin_impersonate_path(user.id)
