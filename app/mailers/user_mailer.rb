@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
       mail(
         :to => @user.email, 
         :subject => 'Welcome to It\'s Your District!',
-        :bcc => 'liz@itsyourdistrict.org'
+        :bcc => ['liz@itsyourdistrict.org', 'ybarthaud@itsyourdistrict.org']
       ).deliver
     end
   end
