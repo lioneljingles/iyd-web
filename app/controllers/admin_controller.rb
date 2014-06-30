@@ -15,7 +15,7 @@ class AdminController < ApplicationController
   private
   
   def require_admin
-    unless current_user and current_user.email == 'info@itsyourdistrict.org'
+    unless current_user and current_user.role == 1
       render 'root/missing'
     end
   end

@@ -8,16 +8,16 @@ namespace :data do
       name: "Lionel Jingles",
       role:  User::Role::ADMIN
     })
-    organization = Organization.new({
+    org = Organization.new({
       name: "It's Your District",
       summary: "It's Your District is a comprehensive database that provides a platform for people seeking to serve their community. Community conscious neighbors and organizations can network, advocate, and connect with like-minded groups and individuals in San Francisco's District 6.",
       website: 'http://www.itsyourdistrict.org'
     })
-    organization.visibility = Organization::Visibility::PRIVATE
-    organization.images << Image.create(image: URI.parse('http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg'))
-    organization.tags = Tag.where(name: 'Tech')
-    organization.user = user
-    organization.save!
+    org.visibility = Organization::Visibility::PRIVATE
+    org.images << Image.create(image: URI.parse('http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg'))
+    org.tags = Tag.where(name: 'Tech')
+    org.user = user
+    org.save!
   end
   
   desc 'Remove IYD admin account'
@@ -51,6 +51,14 @@ namespace :data do
       user = User.find_by_email(item[:email])
       user.name = item[:contact]
       user.save!
+    end
+  end
+  
+  desc 'Remove unusual characters from summaries'
+  task remove_chars: :environment do
+    Organization.all.each do |org|
+      org.summary = org.summary.gsub(/\n|\r/, '')
+      org.save!
     end
   end
   

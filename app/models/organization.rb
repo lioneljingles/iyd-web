@@ -44,10 +44,22 @@ class Organization < ActiveRecord::Base
     
   end
   
+  def truncated_summary
+    if self.summary.length > 250
+      truncated_summary = self.summary[0..250].gsub(/[\W_]*$/, '')
+      truncated_summary += '...'
+    else
+      self.summary
+    end
+  end
+  
   def self.page(row)
-    limit = row == 0 ? 4 : 3
+    IydWeb::Application.verify_shuffle_orgs()
     offset = row == 0 ? 0 : 2 * row + 1
-    orgs = Organization.where(visibility: Organization::Visibility::PUBLIC).includes(:images).limit(limit).offset(offset)
+    limit = row == 0 ? 3 : 2
+    org_ids = IydWeb::Application::ORG_SHUFFLE[:order].slice(offset, limit)  
+    orgs = Organization.where(visibility: Organization::Visibility::PUBLIC, id: org_ids)
+      .select(:id, :name, :summary, :slug).includes(:images)
     page = []
     orgs.each_with_index do |org, i|
       page << org.js_format(i)
@@ -58,7 +70,7 @@ class Organization < ActiveRecord::Base
   def js_format(i)
     {
       name: self.name,
-      summary: self.summary,
+      summary: self.truncated_summary,
       image: self.images.last.image.url(i == 0 ? :large : :small),
       path: self.profile,
       contact: self.contact
@@ -73,9 +85,10 @@ class Organization < ActiveRecord::Base
     self.city = 'San Francisco'
     self.state = 'CA'
     self.slug = self.name.parameterize
-    if not self.website =~ /\Ahttps?:\/\//
+    if (self.website =~ /\Ahttps?:\/\//).nil?
       self.website = 'http://' + self.website
     end
+    self.summary.gsub(/\n|\r/, '')
   end
   
 end

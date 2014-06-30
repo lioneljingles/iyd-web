@@ -86,9 +86,11 @@ header {
       }
     }
     li {
-      float: right;
-      &.fb {
+      &.social {
         float: left;
+      }
+      &:not(.social) {
+        float: right;
       }
       &.login {
         margin-right: -20px;
@@ -162,14 +164,14 @@ footer {
   border-top: 1px solid $lightGray;
   background-color: white;
   .copyright {
+    float: right;
     color: $gray;
-    float: left;
   }
   ul {
     li {
-      float: right;
-      .rightmost {
-        margin-right: -20px;
+      float: left;
+      &:first-child {
+        margin-left: -15px;
       }
       a {
         display: block;

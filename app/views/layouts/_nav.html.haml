@@ -1,6 +1,8 @@
 - user = current_user
 
 %ul.nav{class: user.nil? ? '' : 'logged-in'}
+  %li.social= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
+  %li.social= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
   %li.login= link_to 'Login', login_path, remote: true
   %li.register= link_to 'Register', org_path, remote: true
   %li.user
@@ -13,6 +15,8 @@
   .clear
 
 %ul#user-menu
+  - if user and user.role == 1
+    %li= link_to 'Admin Functions', admin_path
   %li.org-link
     %a{href: user.nil? ? '' : user.organization.profile}
       %span>= user.nil? ? '' : user.organization.name

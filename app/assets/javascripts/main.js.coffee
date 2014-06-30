@@ -77,6 +77,8 @@ $ ->
         errors[id] = 'Password and password confirmation don\'t match.'
       else if id.indexOf('website') >= 0 and not (App.Utils.isValidUrl(value) or '')
         errors[id] = 'Please enter a valid website URL.'
+      else if id.indexOf('summary') >= 0 and value.length > 400
+        errors[id] = 'Summary is too long. Please use 400 characters or less.'
       else if id.indexOf('number') >= 0
         value = value.replace(/[^\d.-]/g, '')
         if value
