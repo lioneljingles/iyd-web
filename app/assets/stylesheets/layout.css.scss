@@ -74,7 +74,7 @@ header {
       &:link, &:visited, &:hover, &:active { color: white; }
     }
   }
-  ul.nav, ul.social {
+  ul.nav {
     &.logged-in {
       li {
         &.register, &.login {
@@ -86,11 +86,9 @@ header {
       }
     }
     li {
-      &.social {
+      float: right;
+      &.left {
         float: left;
-      }
-      &:not(.social) {
-        float: right;
       }
       &.login {
         margin-right: -20px;

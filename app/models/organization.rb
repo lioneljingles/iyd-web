@@ -24,7 +24,8 @@ class Organization < ActiveRecord::Base
   end
     
   def location
-    'District ' + self.district + ', ' + self.city
+    # 'District ' + self.district + ', ' + self.city
+    self.city
   end
   
   def short_website

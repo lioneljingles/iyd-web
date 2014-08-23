@@ -1,17 +1,17 @@
 development:
   adapter: postgresql
   database: iyd
-  port: 5432
+  port: 15432
   username: postgres
 
 test:
   adapter: postgresql
   database: iyd
-  port: 5432
+  port: 15432
   username: postgres
 
 production:
   adapter: postgresql
   database: iyd
-  port: 5432
+  port: 15432
   username: postgres

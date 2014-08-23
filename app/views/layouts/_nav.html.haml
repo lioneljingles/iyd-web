@@ -1,8 +1,9 @@
 - user = current_user
 
 %ul.nav{class: user.nil? ? '' : 'logged-in'}
-  %li.social= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
-  %li.social= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
+  %li.left= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
+  %li.left= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
+  %li.left= link_to 'About Us', about_path
   %li.login= link_to 'Login', login_path, remote: true
   %li.register= link_to 'Register', org_path, remote: true
   %li.user
