@@ -2,7 +2,7 @@ $bodyFontFamily: Roboto, 'Helvetica Neue', helvetica, arial, sans-serif;
 $titleFontFamily: Sanchez, Georgia, serif;
 
 body {
-  font: normal normal 1.0em/1.4em $bodyFontFamily;
+  font: normal normal 14px/18px $bodyFontFamily;
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   color: $textGray;
@@ -26,7 +26,7 @@ h1 {
   line-height: 1.2em;
 }
 
-h2, .cover.large .title .name {
+h2 {
   font-size: 1.5em;
   line-height: 1.2em;
 }
