@@ -104,6 +104,7 @@ class OrganizationsController < ApplicationController
       image = Image.create!(params[:image].permit(:image))
       org.images << image
     end
+    org.tags = Tag.where(name: params.permit(tags: [])[:tags])
     if org.update(org_params)
       redirect_to org.profile({update: true})
     else
@@ -124,7 +125,8 @@ class OrganizationsController < ApplicationController
       :website,
       :summary,
       :description,
-      :district
+      :district,
+      :phone
     )
   end
   
