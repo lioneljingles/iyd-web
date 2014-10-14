@@ -13,7 +13,6 @@ header.landing {
     display: inline-block;
     width: 200px;
     height: 200px;
-    margin-right: 60px;
     background: transparent url(image_path('logo-action.png')) no-repeat scroll center center;
     background-size: 200px 200px;
     overflow: hidden;
@@ -21,7 +20,7 @@ header.landing {
   }
   .text {
     display: inline-block;
-    width: 500px;
+    max-width: 500px;
     margin-top: 10px;
     vertical-align: top;
   }
@@ -119,11 +118,8 @@ p.none {
     display: inline-block;
     position: relative;
     width: 250px;
-    margin-left: 20px;
+    margin: 10px;
     text-align: left;
-    &:first-child {
-      margin-left: 0;
-    }
     &#search {
       .icon {
         padding-top: 6px;

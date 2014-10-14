@@ -22,7 +22,7 @@ body {
   background-color: white;
   .container {
     position: relative;
-    width: $pageWidth;
+    max-width: $pageWidth;
     margin: auto;
     padding: 0 $pad;
   }
@@ -250,7 +250,7 @@ blockquote {
 }
 
 #content {
-  width: $pageWidth;
+  max-width: $pageWidth;
   margin: 0 auto $pad auto;
   padding: 20px $pad ($pad + $footerHeight) $pad;
 }
