@@ -19,7 +19,7 @@ window.App = {
   
     isEmpty: (object) ->
       (i for own i of object).length == 0
-
+      
   }
   
 }

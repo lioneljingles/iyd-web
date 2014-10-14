@@ -12,7 +12,7 @@
     = text_field :org, :name, placeholder: 'My Organization', value: @org.name
   .form-row
     %label Website
-    = text_field :org, :website, placeholder: 'www.mywebsite.com', value: @org.website
+    = text_field :org, :website, placeholder: 'www.mywebsite.com', value: @org.website, :'data-optional' => true
   .form-row
     %label Phone Number
     = text_field :org, :phone, placeholder: '415-555-5555', value: @org.phone, :'data-optional' => true
@@ -20,6 +20,21 @@
     %label
       Mission
     = text_area :org, :summary, placeholder: 'itsyourdistrict.org is a comprehensive...', value: @org.summary
+  .form-row
+    %label
+      San Francisco District
+    #district.select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        District #{@org.district}
+      %ul.options
+        - for i in (1..11)
+          %li{:'data-value' => i} District #{i.to_s}
+    = hidden_field :org, :district, value: @org.district
+    .note
+      = link_to 'Click here to find your district.', 'http://propertymap.sfplanning.org/?name=sffind',
+        target: '_blank'
   .form-row
     %label
       Image

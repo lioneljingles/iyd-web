@@ -74,6 +74,20 @@ header {
       &:link, &:visited, &:hover, &:active { color: white; }
     }
   }
+  #logo {
+    float: left;
+    a {
+      display: block;
+      width: 305px;
+      height: $headerHeight;
+      margin-left: -20px;
+      padding: 12px 20px 0 20px;
+      background: transparent url(image_path('logo-header-small.png')) no-repeat scroll center center;
+      background-size: 265px 50px;
+      overflow: hidden;
+      text-indent: -9999px;
+    }
+  }
   ul.nav {
     &.logged-in {
       li {
@@ -98,37 +112,34 @@ header {
       }
       &.user {
         display: none;
-        .caret-up {
-          display: none;
+        i.fa {
+          color: $lightGray;
+        }
+        i.fa-caret-up { 
+          display: none; 
+        }
+        i.fa-caret-down { 
+          display: inline; 
         }
         &.selected {
           background-color: $textGray;
-          .caret-up {
-            display: inline;
+          i.fa-caret-up { 
+            display: inline; 
           }
-          .caret-down {
-            display: none;
+          i.fa-caret-down { 
+            display: none; 
           }
         }
       }
-      &#logo {
-        float: left;
-        a {
-          display: block;
-          width: 305px;
-          height: $headerHeight;
-          margin-left: -20px;
-          padding: 12px 20px 0 20px;
-          background: $darkGray url(image_path('logo-header-small.png')) no-repeat scroll center center;
-          background-size: 265px 50px;
-          overflow: hidden;
-          text-indent: -9999px;
-        }
+      &.donate a {
+        color: gold;
+        font-weight: bold;
       }
       a {
         height: $headerHeight;
         line-height: $headerHeight;
-        padding: 0 20px;
+        padding: 0 15px;
+        font-size: 0.9em;
         &:hover {
           background-color: $textGray;
         }

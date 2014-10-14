@@ -8,16 +8,42 @@
         %h1.white Empowering communities through collaboration.
         = link_to 'Sign up now!', org_path, class: [:register, :btn, :large], remote: true
 
-#tags.center
-  .tag.all.selected ALL
-  - for tag in @tags
-    .tag>= tag.name
+#controls.center
+  #search.field
+    = text_field_tag :'search-input', '', placeholder: 'Search...'
+    .icon
+      %i.fa.fa-lg.fa-search
+  #district.field
+    .select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        All Districts
+      %ul.options
+        %li.none All Districts
+        - for i in (1..11)
+          %li{:'data-value' => i} District #{i.to_s}
+  #tag.field
+    .select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        All Categories
+      %ul.options
+        %li.none All Categories
+        - for tag in @tags
+          %li= tag.name
 
 #main.landing
-  .row{:'data-row' => 0}
+  %p.none.large.center
+    No results found.
+  .row.top{:'data-row' => 0}
     .tile.loading.large
       .cover.large
-        %a.title Title
+        %a.title
+          .name Title
+          .location
+        %ul.tags
       .org-info
         %p.summary
         .center
@@ -26,14 +52,20 @@
   .row.template{:'data-row' => 0}
     .tile.col-1-2.loading
       .cover.small
-        %a.title.info Title
+        %a.info.title
+          .name Title
+          .location
+        %ul.tags
       .org-info
         %p
           %span.summary
           %a.info Learn more...
     .tile.col-1-2.last-col.loading
       .cover.small
-        %a.title.info Title
+        %a.info.title
+          .name Title
+          .location
+        %ul.tags
       .org-info
         %p
           %span.summary

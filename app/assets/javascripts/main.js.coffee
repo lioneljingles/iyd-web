@@ -6,22 +6,95 @@ $ ->
   $overlay = $('#overlay')
   $nav = $('header ul.nav')
   $userMenu = $('header ul#user-menu')
+  $main = $('#main.landing')
+  $footer = $('footer')
+  $template = $(this).find('.row.template').clone()
+  $search = $('#search.field')
+  $district = $('#district.field')
+  $tag = $('#tag.field')
   
+  
+  # STATE VARIABLES
+  
+  row = 0
+  has_more = true
+  loading_count = 1
+  search = ''
+  tag = ''
+  district = 0
+  if window.location.hash
+    tag = window.location.hash.substring(1)
+    $tag.find("li:contains('#{tag}')").each ->
+      $tag.find('.current').text($(this).text())
   
   # FUNCTIONS
   
   showFormErrors = ($form, errors) ->
     for error, message of errors
       $form.find('#' + error).addClass('error').after($('<div>', {class: 'note error'}).text(message))
-    $('html, body').animate({ scrollTop: $form.find('.error').first().offset().top - 40 }, 'fast');
+    $('html, body').animate({ scrollTop: $form.find('.error').first().offset().top - 40 }, 'fast')
   
   
-  # INTERACTION EVENTS
+  # SELECT / OPTION DROPDOWNS
+  
+  $('body').on 'click', '.select', ->
+    $select = $(this)
+    if $select.hasClass('open')
+      $select.removeClass('open')
+    else
+      $('.select').not($select).removeClass('open')
+      $select.addClass('open')
+  
+  $('body').on 'click', '.select ul.options li', ->
+    $option = $(this)
+    $select = $option.closest('.select')
+    $select.find('.current').text($option.text())
+  
+  $search.find('input').keydown (event) ->
+    if event.keyCode == 13
+      clearDistrict()
+      clearTag()
+      search = $(this).val()
+      getOrgs()
+  
+  $search.find('.icon').click ->
+    clearDistrict()
+    clearTag()
+    search = $search.find('input').val()
+    getOrgs()
+  
+  $district.find('li').click ->
+    clearSearch()
+    clearTag()
+    district = if $(this).hasClass('none') then 0 else $(this).attr('data-value')
+    getOrgs()
+  
+  $tag.find('li').click ->
+    clearSearch()
+    clearDistrict()
+    tag = if $(this).hasClass('none') then '' else $(this).text()
+    getOrgs()
+    
+  $main.on 'click', 'ul.tags li a', ->
+    clearSearch()
+    clearDistrict()
+    tag = $(this).text()
+    $tag.find("li:contains('#{tag}')").each ->
+      $tag.find('.current').text($(this).text())
+    getOrgs()
+  
+  $('body').on 'click', '#district.select li', ->
+    $('input#org_district').val($(this).attr('data-value'))
+    
+  
+  # MENUS
   
   $('body').click (event) ->
     if $userMenu.is(':visible')
       $userMenu.slideUp('fast') 
       $nav.find('li.user.selected').removeClass('selected')
+    unless $(event.target).closest('.select').length
+      $('.select').removeClass('open')
   
   $nav.find('li.user a').click (event) ->
     $li = $(this).closest('li')
@@ -31,6 +104,9 @@ $ ->
       $li.addClass('selected')
       event.stopPropagation()
       $userMenu.slideDown('fast')
+  
+  
+  # OVERLAY
   
   $overlay.on 'click', '.close', ->
     $overlay.hide 'fast', ->
@@ -75,7 +151,7 @@ $ ->
         errors[id] = 'Your password must have at least 6 characters.'
       else if id.indexOf('password_confirmation') >= 0 and value != $form.find('input[id*="_password"]').val()
         errors[id] = 'Password and password confirmation don\'t match.'
-      else if id.indexOf('website') >= 0 and not (App.Utils.isValidUrl(value) or '')
+      else if id.indexOf('website') >= 0 and value and not App.Utils.isValidUrl(value)
         errors[id] = 'Please enter a valid website URL.'
       else if id.indexOf('summary') >= 0 and value.length > 400
         errors[id] = 'Summary is too long. Please use 400 characters or less.'
@@ -128,42 +204,92 @@ $ ->
       $overlay.css(top: $(window).scrollTop() + 80).show('fast').find('.content').html(data)
   
   
-  # INFINITE FRONT PAGE
+  # INTERNAL FUNCTIONS
   
-  $main = $('#main.landing')
-  $footer = $('footer')
+  clearSearch = ->
+    search = ''
+    $search.find('input').val('')
   
-  $template = $(this).find('.row.template').clone()
-  row = 0
-  has_more = true
-  loading_count = 1
-  tag = window.location.hash.substring(1)
+  clearTag = ->
+    tag = ''
+    $tag.find('.current').text($tag.find('.none').text())
+  
+  clearDistrict = ->
+    district = 0
+    $district.find('.current').text($district.find('.none').text())
   
   addRow = (count) ->
-    $.get '/org-list', {row: row, tag: tag}, (data) ->
+    $.get '/org-list', {row: row, district: district, tag: tag, search: search}, (data) ->
       if (data.success == true)
         $main.find(".row[data-row='#{data.row}'] .tile").each (i, tile) ->
           $tile = $(tile).removeClass('loading')
           if i of data.orgs
             org = data.orgs[i]
             $cover = $tile.find('.cover').css('background-image': "url('#{org.image}')")
-            $cover.find('.title').text(org.name)
+            $cover.find('.title .name').text(org.name)
+            $cover.find('.title .location').text(org.location)
             $tile.find('.org-info .summary').text(org.summary)
             $tile.find('a.button, a.title, a.info').attr(href: org.path)
             $tile.find('a.contact').attr(href: org.contact)
+            $tile.find('ul.tags').empty()
+            for name in org.tags
+              $a = $('<a>', 
+                href: "/\##{name}"
+                class: 'tag'
+              ).text(name)
+              $li = $('<li>').append($a)
+              $tile.find('ul.tags').append($li)
             has_more = data.has_more
             loading_count--
+            if row == 0
+              $tile.closest('.row:hidden').show()
+              $main.find('p.none').hide()
           else
             has_more = false
-            if ((row == 0 and i == 1) or (row != 0 and i == 0))
+            if row == 0 and i == 0
+              $main.find('p.none').show()
+              $tile.closest('.row').hide()
+              $main.find('.row.template').remove()
+            else if row == 0 and i == 1
+              $tile.closest('.row').remove()
+            else if row != 0 and i == 0
               $tile.closest('.row').remove()
             else
               $tile.remove()
             return false
   
+  getOrgs = ->
+    row = 0
+    has_more = true
+    loading_count = 1
+    isComplete = false
+    if search
+      tag = ''
+      location.hash = ''
+      district = 0
+    else if district
+      tag = ''
+      location.hash = ''
+    else if tag
+      location.hash = tag
+    $('body').animate({scrollTop: 0}, 'fast') if $('body').scrollTop() > 0
+    $main.find('.row').each (i, element) ->
+      $row = $(element)
+      if $row.attr('data-row') == '0'
+        isComplete = true if i == 2
+        $row.find('.tile').addClass('loading').find('.cover').css('background-image': '')
+      else
+        $row.remove()
+    unless isComplete
+      $main.find('.row:gt(0)').remove()
+      $row = $template.clone()
+      $row.attr('data-row': row)
+      $main.append($row)
+    addRow(row)
+  
   if $main.length > 0
     addRow(row)
-    $(window).scrollTop(0) if $(window).scrollTop() > 0
+    $('body').scrollTop(0) if $(window).scrollTop() > 0
     $(window).on 'scroll.infinite', ->
       if has_more and loading_count < 5
         if $(window).scrollTop() + $(window).height() >= $footer.offset().top - 10
@@ -172,47 +298,7 @@ $ ->
           $row = $template.clone()
           $row.attr('data-row': row)
           $main.append($row)
-          addRow(row)  
-  
-  # TAG LOGIC
-  
-  if tag
-    $('.tag').each (i, element) ->
-      $tag = $(element)
-      if $tag.text() == tag
-        $('.tag.selected').removeClass('selected')
-        $tag.addClass('selected')
-  
-  $('.tag').click ->
-    $tag = $(this)
-    if $tag.hasClass('selected')
-      return
-    else
-      $('.tag.selected').removeClass('selected')
-      $tag.addClass('selected')
-      if $tag.hasClass('all')
-        tag = ''
-      else
-        tag = $tag.text()
-      window.location.hash = '#' + tag
-      row = 0
-      has_more = true
-      loading_count = 1
-      isComplete = false
-      $main.find('.row').each (i, element) ->
-        $row = $(element)
-        if $row.attr('data-row') == '0'
-          isComplete = true if i == 2
-          $row.find('.tile').addClass('loading').find('.cover').css('background-image': '')
-        else
-          $row.remove()
-      unless isComplete
-        $main.find('.row:gt(0)').remove()
-        $row = $template.clone()
-        $row.attr('data-row': row)
-        $main.append($row)
-      addRow(row)
-
+          addRow(row)
 
 
 

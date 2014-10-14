@@ -27,19 +27,19 @@ for tag in tags
 end
 
 list = [
-   # {
-   # email: 'itsyourdistrict@gmail.com',
-   # name: 'It\'s Your District',
-   # contact: 'Lionel Jingles',
-   # phone: '415-902-3240',
-   # summary: 'We launched!',
-   # website: 'http://www.itsyourdistrict.org',
-   # address_1: '123 Real St.',
-   # address_2: '',
-   # zip: '94107',
-   # image_url: 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg',
-   # tags: ['Community', 'Tech']
-   # },
+   {
+   email: 'info@itsyourdistrict.org',
+   name: 'It\'s Your District',
+   contact: 'Lionel Jingles',
+   phone: '415-902-3240',
+   summary: 'We launched!',
+   website: 'http://www.itsyourdistrict.org',
+   address_1: '123 Real St.',
+   address_2: '',
+   zip: '94107',
+   image_url: 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/San_Francisco_Pride_Parade_2012-6.jpg/1280px-San_Francisco_Pride_Parade_2012-6.jpg',
+   tags: ['Community', 'Tech']
+   },
    {
      email: 'kbaker@tndc.org',
      name: 'Tenderloin Neighborhood Development Corporation',
@@ -115,7 +115,7 @@ list = [
      address_1: '330 Ellis Street',
      address_2: '',
      zip: '94102',
-     image_url: 'https://itsyourdistrict.wufoo.com/cabinet/mabxluo03t6is3/fFqOab09yxk%3D/8.jpg',
+     image_url: 'http://www.saveamericascinemas.org/wp-content/uploads/2014/02/aa-happy-people.jpg',
      tags: ['Social Justice', 'Homelessness', 'Nutrition', 'Youth']
    },
    {
@@ -193,7 +193,7 @@ list = [
      address_1: '175 7th St',
      address_2: '',
      zip: '94103',
-     image_url: 'https://itsyourdistrict.wufoo.com/cabinet/mabxluo03t6is3/KtNe2pHWViQ%3D/image.jpeg.jpg',
+     image_url: 'http://www.saveamericascinemas.org/wp-content/uploads/2014/02/aa-happy-people.jpg',
      tags: ['Education', 'Social Justice', 'Youth']
    },
    {
@@ -219,7 +219,7 @@ list = [
      address_1: '55 Taylor Street',
      address_2: '',
      zip: '94102',
-     image_url: 'https://itsyourdistrict.wufoo.com/cabinet/mabxluo03t6is3/vGBsl5WVPik%3D/05_919625_456332957778321_1481607057_o.jpg',
+     image_url: 'http://www.saveamericascinemas.org/wp-content/uploads/2014/02/aa-happy-people.jpg',
      tags: ['Art', 'Music']
    },
    {
@@ -232,7 +232,7 @@ list = [
      address_1: '1038 Howard Street',
      address_2: '',
      zip: '94103',
-     image_url: 'https://itsyourdistrict.wufoo.com/cabinet/mabxluo03t6is3/he8R3KaXpok%3D/img_5959.jpg',
+     image_url: 'http://www.saveamericascinemas.org/wp-content/uploads/2014/02/aa-happy-people.jpg',
      tags: ['Youth', 'Violence Prevention']
    },
    {

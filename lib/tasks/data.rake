@@ -62,4 +62,13 @@ namespace :data do
     end
   end
   
+  desc 'Add new tags - Sports, LGBT, Elderly Care'
+  task add_new_tags: :environment do
+    ['Sports', 'LGBT', 'Elderly Care'].each do |name|
+      if Tag.where(name: name).count == 0
+        Tag.create!(name: name)
+      end
+    end
+  end
+  
 end

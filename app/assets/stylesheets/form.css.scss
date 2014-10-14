@@ -1,6 +1,6 @@
 $formElementHeight: 40px;
 
-input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, .form-select, select {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, .select {
   -webkit-appearance: none;
   width: 350px;
   height: $formElementHeight;
@@ -8,7 +8,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   outline: none;
   border: 2px solid $lightGray;
   border-radius: 2px;
-  background-color: #ffe;
+   background-color: #fff;
   -webkit-appearance: none;
   font-family: inherit;
   color: inherit;
@@ -45,10 +45,27 @@ label {
   line-height: $formElementHeight;
   vertical-align: top;
 }
-.form-select {
-  line-height: $formElementHeight;
+
+.select {
+  display: inline-block;
+  line-height: $formElementHeight - 4px;
   cursor: pointer;
   position: relative;
+  &.open {
+    i.fa-caret-down { display: none; }
+    i.fa-caret-up { display: block; }
+    ul {
+      max-height: 400px;
+    }
+  }
+  i.fa-caret-down { display: block; }
+  i.fa-caret-up { display: none; }
+  i {
+    color: $gray;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
   .select-title {
     .default {
       color: $gray;
@@ -59,24 +76,25 @@ label {
     }
   }
   ul {
-    display: none;
+    max-height: 0;
     z-index: 10;
     position: absolute;
-    top: 34px;
-    left: -1px;
-    width: inherit;
-    max-height: 200px;
-    overflow: scroll;
+    top: 100%;
+    left: -2px;
+    right: -2px;
+    overflow-y: scroll;
     line-height: 1em;
-    background-color: #fcfcfc;
-    border: 1px solid #d6d6d6;
+    background-color: inherit;
+    border: 2px solid $lightGray;
+    border-top: none;
+    @include transition(max-height 0.25s linear);
     li {
       padding: 8px 10px;
       &.none-selected {
-        color: $gray;
+        color: $lightGray;
       }
       &:hover {
-        background-color: #d6d6d6;
+        background-color: $lightGray;
       }
     }
   }
@@ -89,34 +107,16 @@ label {
     margin-left: 255px;
   }
   &.single {
-    input, .form-select {
+    input, .select {
       width: 380px;
     }
   }
   &.half {
-    input, .form-select {
+    input, .select {
       width: 180px;
       &:first-child {
         margin-right: 16px;
       }
-    }
-  }
-  &.third-first {
-    input:first-child, .form-select:first-child {
-      width: 120px;
-      margin-right: 16px;
-    }
-    input:last-child, .form-select:last-child {
-      width: $formElementHeight;
-    }
-  }
-  &.third-last {
-    input:first-child, .form-select:first-child {
-      width: $formElementHeight;
-      margin-right: 16px;
-    }
-    input:last-child, .form-select:last-child {
-      width: 120px;
     }
   }
   &:last-child {

@@ -1,7 +1,10 @@
 header.landing {
-//  background: $darkGray url(image_path('crowd-action-dark.jpg')) no-repeat scroll center center;
-  background-color: $darkGray;
-  @include background-cover;
+   background: transparent url(image_path('crowd-blur.jpg')) no-repeat scroll center center;
+   @include background-cover;
+  background-color: $gray;
+  ul.nav li:first-child {
+    margin-left: -20px;
+  }
 }
 
 #action {
@@ -22,6 +25,9 @@ header.landing {
     margin-top: 10px;
     vertical-align: top;
   }
+  .register {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+  }
 }
 
 .cover {
@@ -30,20 +36,29 @@ header.landing {
   background: $lightGray url(image_path('loading.gif')) no-repeat scroll center center;
   @include background-cover;
   .title {
-    color: $textGray;
     position: absolute;
     left: 0;
-    top: 0;
     margin: 15px;
     padding: 10px;
     background-color: rgba(255,255,255,0.9);
-    text-transform: uppercase;
+    .name {
+      color: $textGray;
+      text-transform: uppercase;
+    }
+    .location {
+      color: $darkGray;
+      font-style: italic;
+    }
   }
   .tags {
     position: absolute;
     left: 0;
+    right: 0;
     bottom: 0;
     margin: 10px;
+    li {
+      float: left;
+    }
   }
   &.large {
     height: 300px;
@@ -53,10 +68,14 @@ header.landing {
   }
 }
 
+p.none {
+  margin-top: 40px;
+}
+
 .row {
   padding-top: 20px;
   border-top: 2px solid $lightGray;
-  &:first-child {
+  &.top {
     border-top: none;
   }
 }
@@ -90,6 +109,38 @@ header.landing {
   ul {
     li {
       margin-bottom: 5px;
+    }
+  }
+}
+
+#controls {
+  .field {
+    display: inline-block;
+    position: relative;
+    width: 250px;
+    margin-left: 20px;
+    text-align: left;
+    &:first-child {
+      margin-left: 0;
+    }
+    &#search {
+      .icon {
+        padding-top: 6px;
+        background-color: $lightGray;
+      }
+    }
+    input, .select {
+      width: 100%;
+    }
+    .icon {
+      color: $gray;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      bottom: 2px;
+      width: 40px;
+      cursor: pointer;
+      text-align: center;
     }
   }
 }

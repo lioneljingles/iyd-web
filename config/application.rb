@@ -5,15 +5,11 @@ Bundler.require(:default, Rails.env)
 
 module IydWeb
   class Application < Rails::Application
-    ORG_SHUFFLE  = {
-      date: Date.today,
-      order: []
-    }
+    config.shuffle_date = nil
     def self.verify_shuffle_orgs()
-      if IydWeb::Application::ORG_SHUFFLE[:order].empty? or Date.today > IydWeb::Application::ORG_SHUFFLE[:date]
-        org_ids = Organization.where(visibility: Organization::Visibility::PUBLIC).select(:id)
-        IydWeb::Application::ORG_SHUFFLE[:order] = org_ids.map{|record|record.id}.shuffle
-        IydWeb::Application::ORG_SHUFFLE[:date] = Date.today
+      if IydWeb::Application::config.shuffle_date.nil? or Date.today > IydWeb::Application::config.shuffle_date
+        Organization.shuffleOrder()
+        IydWeb::Application::config.shuffle_date = Date.today
       end
     end
   end

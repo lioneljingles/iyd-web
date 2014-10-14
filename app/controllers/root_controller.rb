@@ -5,6 +5,10 @@ class RootController < ApplicationController
   
   def index
     @tags = Tag.all
+    @districts = []
+    (1..11).each do |n|
+      @districts << "#{n.to_s}"
+    end
   end
   
   def contact

@@ -24,8 +24,7 @@ class Organization < ActiveRecord::Base
   end
     
   def location
-    # 'District ' + self.district + ', ' + self.city
-    self.city
+    "#{self.city}, District #{self.district}"
   end
   
   def short_website
@@ -54,13 +53,33 @@ class Organization < ActiveRecord::Base
     end
   end
   
-  def self.page(row)
+  def self.shuffleOrder
+    orgs = Organization.all.shuffle
+    i = 1
+    orgs.each do |org|
+      org.order = i
+      org.save()
+      i += 1
+    end
+  end
+  
+  def self.page(row, search, district)
     IydWeb::Application.verify_shuffle_orgs()
     offset = row == 0 ? 0 : 2 * row + 1
     limit = row == 0 ? 3 : 2
-    org_ids = IydWeb::Application::ORG_SHUFFLE[:order].slice(offset, limit)  
-    orgs = Organization.where(visibility: Organization::Visibility::PUBLIC, id: org_ids)
-      .select(:id, :name, :summary, :slug).includes(:images)
+    if not search.nil?
+      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
+        .where("LOWER(name) LIKE ?", "%#{search.downcase}%").select(:id, :name, :summary, :slug, :city, :district)
+        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
+    elsif not district.nil?
+      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
+        .where(district: district).select(:id, :name, :summary, :slug, :city, :district)
+        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
+    else
+      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
+        .select(:id, :name, :summary, :slug, :city, :district)
+        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
+    end
     page = []
     orgs.each_with_index do |org, i|
       page << org.js_format(i)
@@ -74,7 +93,9 @@ class Organization < ActiveRecord::Base
       summary: self.truncated_summary,
       image: self.images.last.image.url(i == 0 ? :large : :small),
       path: self.profile,
-      contact: self.contact
+      contact: self.contact,
+      location: self.location,
+      tags: self.tags.map{|tag| tag.name}
     }
   end
 
@@ -82,11 +103,10 @@ class Organization < ActiveRecord::Base
   
   def assign_defaults
     self.visibility = Organization::Visibility::PUBLIC
-    self.district = 6
     self.city = 'San Francisco'
     self.state = 'CA'
     self.slug = self.name.parameterize
-    if (self.website =~ /\Ahttps?:\/\//).nil?
+    if not self.website.blank? and (self.website =~ /\Ahttps?:\/\//).nil?
       self.website = 'http://' + self.website
     end
     self.summary.gsub(/\n|\r/, '')

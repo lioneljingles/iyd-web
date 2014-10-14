@@ -1,9 +1,12 @@
 - user = current_user
 
 %ul.nav{class: user.nil? ? '' : 'logged-in'}
+  %li.donate.left
+    = link_to 'Donate!', 
+      'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G74PM8WQZ899G', target: '_blank'
+  %li.left= link_to 'About Us', about_path
   %li.left= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
   %li.left= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
-  %li.left= link_to 'About Us', about_path
   %li.login= link_to 'Login', login_path, remote: true
   %li.register= link_to 'Register', org_path, remote: true
   %li.user
@@ -11,8 +14,8 @@
       %span.email
         = user.nil? ? '' : user.email
       &nbsp;
-      %span.caret-up &and;
-      %span.caret-down &or;
+      %i.fa.fa-caret-down
+      %i.fa.fa-caret-up
   .clear
 
 %ul#user-menu

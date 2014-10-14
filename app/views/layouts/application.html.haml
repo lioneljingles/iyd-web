@@ -3,7 +3,9 @@
   %head
     %title= content_for?(:title) ? yield(:title) : 'It\'s Your District!'
     = stylesheet_link_tag :application, media: "all", :'data-turbolinks-track' => true
-    %link{href: 'http://fonts.googleapis.com/css?family=Roboto:300,700|Sanchez:400italic,400', rel:'stylesheet', type:'text/css'}
+    %link{href: 'http://fonts.googleapis.com/css?family=Roboto:300,700|Sanchez:400italic,400', 
+      rel:'stylesheet', type:'text/css'}
+    %link{href: '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel:'stylesheet'}
     %link{rel: 'icon', type:'image/png', href: image_path('favicon.png')}
     = csrf_meta_tags
     = yield(:head)
@@ -12,13 +14,12 @@
     #overlay
       .close
       .content
-    %header
-      .container
-        - if content_for?(:header)
-          = yield(:header)
-        - else
-          %ul.nav
-            %li#logo= link_to 'It\'s Your District', root_path
+    - if content_for?(:header)
+      = yield(:header)
+    - else
+      %header
+        .container
+          #logo= link_to 'It\'s Your District', root_path
           = render('layouts/nav')
     #content
       - if content_for?(:notice)

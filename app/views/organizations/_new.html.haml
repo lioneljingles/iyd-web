@@ -50,6 +50,22 @@
     .note A brief statement of your organization's Mission.
   .form-row
     %label
+      San Francisco District
+      %strong *
+    #district.select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        Select A District...
+      %ul.options
+        - for i in (1..11)
+          %li{:'data-value' => i} District #{i.to_s}
+    = hidden_field :org, :district
+    .note
+      = link_to 'Click here to find your district.', 'http://propertymap.sfplanning.org/?name=sffind',
+        target: '_blank'
+  .form-row
+    %label
       Image
       %strong *
     .form-link
@@ -57,7 +73,7 @@
       %a.select-file Select Image...
     = file_field :image, :image
   .form-row
-    = label_tag :tags
+    %label Categories
     .clear
     - for tag in @tags
       .tag

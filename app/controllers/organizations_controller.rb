@@ -2,21 +2,31 @@ class OrganizationsController < ApplicationController
     
   def list
     row = params[:row].to_i
-    tag = params.has_key?('tag') ? params[:tag] : nil
     if request.referer.include?('pups!')
       render_debug(row)
       return
     end
-    if tag.blank?
-      orgs = Organization.page(row)
+    
+    search = nil
+    district = nil
+    tag = nil
+    
+    if params.has_key?('search') and not params[:search].blank?
+      search = params[:search]
+    elsif params.has_key?('district') and not params[:district].to_i == 0
+      district = params[:district]
+    elsif params.has_key?('tag') and not params[:tag].blank?
+      tag = params[:tag]
+    end
+        
+    if tag.nil?
+      orgs = Organization.page(row, search, district)
     else
       orgs = Tag.org_page(tag, row)
     end
+    
     has_more = true
     has_more = false if (row == 0 and orgs.length < 3) or (orgs.length < 2)
-    # if has_more and orgs.pop.nil?
-    #   has_more = false
-    # end
     render json: {
       success: true,
       row: row,
@@ -56,6 +66,7 @@ class OrganizationsController < ApplicationController
     
     image = Image.create!(params[:image].permit(:image))
     if not image.save()
+      user.destroy
       for field, message in user.errors
         @errors['image_' + field.to_s] = message.capitalize
       end
@@ -67,12 +78,14 @@ class OrganizationsController < ApplicationController
     org.images << image
     org.tags = Tag.where(name: params.permit(tags: [])[:tags])
     if org.save()
+      session[:user_id] = user.id
       redirect_to org.profile({welcome: true})
     else
+      user.destroy
+      image.destroy
       for field, message in org.errors
         @errors['organization_' + field.to_s] = message.capitalize
       end
-      session[:user_id] = user.id
       @tags = Tag.all
       render '_new'
     end
@@ -110,7 +123,8 @@ class OrganizationsController < ApplicationController
       :name,
       :website,
       :summary,
-      :description
+      :description,
+      :district
     )
   end
   
