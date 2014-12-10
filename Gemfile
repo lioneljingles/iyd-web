@@ -14,5 +14,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'paperclip'
 gem 'bcrypt'
+gem 'american_date'
 
 # gem 'capistrano'

@@ -68,9 +68,13 @@ a, a h1, a h2, a h3, a h4, a h5, a h6, li, input, textarea, .btn, .tag {
   @include transition(color 0.25s linear, background-color 0.25s linear, border-color 0.25s linear);
 }
 
+b {
+  font-weight: bold;
+}
+
 strong, .highlight {
   font-weight: bold;
-  color: $red !important;
+  color: $red;
 }
 
 input, textarea, .dropdown {
@@ -96,7 +100,7 @@ textarea {
   font-size: 0.8em;
   font-style: italic;
   &.large {
-   font-size: 1.2em; 
+   font-size: 1em; 
   }
 }
 

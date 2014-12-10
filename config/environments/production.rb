@@ -22,7 +22,7 @@ IydWeb::Application.configure do
     port: 587,
     domain: 'itsyourdistrict.org',
     user_name: 'info@itsyourdistrict.org',
-    password: 'gr8BALLSofFIRE',
+    password: '##########',
     authentication: 'plain',
     enable_starttls_auto: true
   }

@@ -1,12 +1,15 @@
 - user = current_user
 
 %ul.nav{class: user.nil? ? '' : 'logged-in'}
+  %li.left.social
+    = link_to 'https://www.facebook.com/itsyourdistrict', target: '_blank' do
+      %i.fa.fa-2x.fa-facebook
+  %li.left.social
+    = link_to 'https://twitter.com/itsyourdistrict', target: '_blank' do
+      %i.fa.fa-2x.fa-twitter
   %li.donate.left
-    = link_to 'Donate!', 
+    = link_to 'Donate!',
       'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G74PM8WQZ899G', target: '_blank'
-  %li.left= link_to 'About Us', about_path
-  %li.left= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
-  %li.left= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
   %li.login= link_to 'Login', login_path, remote: true
   %li.register= link_to 'Register', org_path, remote: true
   %li.user
@@ -16,6 +19,9 @@
       &nbsp;
       %i.fa.fa-caret-down
       %i.fa.fa-caret-up
+  %li= link_to 'About Us', about_path
+  %li
+    %b= link_to 'Volunteer Opportunities', opportunities_path
   .clear
 
 %ul#user-menu

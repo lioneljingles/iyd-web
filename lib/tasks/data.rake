@@ -4,7 +4,7 @@ namespace :data do
   task add_iyd: :environment do
     user = User.create({
       email: 'info@itsyourdistrict.org',
-      password: 'roygbiv',
+      password: '##########',
       name: "Lionel Jingles",
       role:  User::Role::ADMIN
     })
@@ -71,4 +71,49 @@ namespace :data do
     end
   end
   
+  desc 'Add test opportunities'
+  task add_test_opps: :environment do
+    roles = [
+      'Chief Awesome Guy',
+      'Mister Amazing',
+      'Happy Intern',
+      'Super Helpful Buddy',
+      'VP of Awesome',
+      'Big Boss',
+      'Executive',
+      'Food Preparing Guru',
+      'Senor Espectacular',
+      'Chef',
+      'Sous-Chef',
+      'Happy Go-Go Robot',
+      'Duderooni',
+      'Hashtag Manager',
+      'Salesperson'
+    ]
+    descriptions = [
+      "This is a sweet one-liner.",
+      "This one has two lines!\r\nExciting!!!",
+      "This has a list of things:\r\nThis is the first thing.\r\nThis is the second thing!\r\nThis is the third thing."
+    ]
+    orgs = Organization.all.order(:order).limit(15).shuffle
+    for i in 0..14
+      start_date = nil
+      end_date = nil
+      rando = rand(3)
+      start_date = Date.today + 10 + rand(20) if rando > 0
+      end_date = start_date + 2 + rand(10) if rando > 1
+      description = descriptions[rand(3)]
+      position = rand(3)
+      orgs[i].opportunities.create({
+        position: position,
+        title: roles[i],
+        description: description,
+        start_date: start_date,
+        end_date: end_date
+      })
+      puts "Created opportunity for #{orgs[i].name}"
+    end
+  end
+  
 end
+

@@ -19,7 +19,9 @@ window.App = {
   
     isEmpty: (object) ->
       (i for own i of object).length == 0
-      
+    
+    insertBreaks: (string) ->
+      '<p>' + string.trim().replace(/(\n)+/g, '</p><p>') + '</p>'
   }
   
 }

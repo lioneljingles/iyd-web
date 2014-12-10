@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :tags
   has_many :images, dependent: :destroy
+  has_many :opportunities, dependent: :destroy
   
   validates :visibility, presence: true
   validates :state, presence: true
@@ -24,15 +25,15 @@ class Organization < ActiveRecord::Base
   end
     
   def location
-    "#{self.city}, District #{self.district}"
+    "#{self.city}, District&nbsp;#{self.district}"
   end
   
   def short_website
     self.website.gsub(/\Ahttps?:\/\//, '')
   end
   
-  def contact
-    contact_path(slug: self.slug)
+  def contact(message=nil)
+    contact_path(slug: self.slug, message: message)
   end
   
   def profile(params={})
@@ -63,23 +64,26 @@ class Organization < ActiveRecord::Base
     end
   end
   
-  def self.page(row, search, district)
+  def self.page(row, search, district, tag)
     IydWeb::Application.verify_shuffle_orgs()
     offset = row == 0 ? 0 : 2 * row + 1
     limit = row == 0 ? 3 : 2
-    if not search.nil?
-      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
-        .where("LOWER(name) LIKE ?", "%#{search.downcase}%").select(:id, :name, :summary, :slug, :city, :district)
-        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
-    elsif not district.nil?
-      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
-        .where(district: district).select(:id, :name, :summary, :slug, :city, :district)
-        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
+    conditions = {}
+    conditions[:district] = district unless district.nil?
+    conditions[:tags] = {name: tag} unless tag.nil?
+    
+    if search.blank?
+      orgs = Organization.includes(:images).joins(:tags)
+        .select(:id, :name, :summary, :slug, :city, :district, :order)
+        .where(conditions)
+        .order(order: :asc).offset(offset).limit(limit).distinct
     else
-      orgs = Organization.where(visibility: Organization::Visibility::PUBLIC)
-        .select(:id, :name, :summary, :slug, :city, :district)
-        .includes(:tags, :images).order(:order).offset(offset).limit(limit)
+      orgs = Organization.includes(:images).joins(:tags)
+        .select(:id, :name, :summary, :slug, :city, :district, :order)
+        .where(conditions).where("LOWER(organizations.name) LIKE ?", "%#{search.downcase}%")
+        .order(order: :asc).offset(offset).limit(limit).distinct
     end
+      
     page = []
     orgs.each_with_index do |org, i|
       page << org.js_format(i)

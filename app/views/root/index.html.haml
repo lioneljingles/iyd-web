@@ -6,9 +6,12 @@
       .logo It's Your District
       .text
         %h1.white Empowering communities through collaboration.
-        = link_to 'Sign up now!', org_path, class: [:register, :btn, :large], remote: true
+        = link_to 'Sign up', org_path, class: [:register, :btn, :large], remote: true
+        = link_to 'Donate',
+          'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G74PM8WQZ899G', 
+          target: '_blank', class: [:donate, :btn, :large, :gray]
 
-#controls.center
+#controls.center.organizations
   #search.field
     = text_field_tag :'search-input', '', placeholder: 'Search...'
     .icon
@@ -33,6 +36,7 @@
         %li.none All Categories
         - for tag in @tags
           %li= tag.name
+  %a.btn Reset
 
 #main.landing
   %p.none.large.center
@@ -72,3 +76,5 @@
           %a.info Learn more...
     .clear
   .clear
+
+

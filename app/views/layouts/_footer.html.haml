@@ -2,7 +2,15 @@
   .container
     .copyright It's Your District &copy; 2014
     %ul
-      %li= link_to 'Facebook', 'https://www.facebook.com/itsyourdistrict', target: '_blank'
-      %li= link_to 'Twitter', 'https://twitter.com/itsyourdistrict', target: '_blank'
+      %li.left.social
+        = link_to 'https://www.facebook.com/itsyourdistrict', target: '_blank' do
+          %i.fa.fa-lg.fa-facebook
+      %li.left.social
+        = link_to 'https://twitter.com/itsyourdistrict', target: '_blank' do
+          %i.fa.fa-lg.fa-twitter
+      %li.donate.left
+        = link_to 'Donate!',
+          'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G74PM8WQZ899G', target: '_blank'
+      %li= link_to 'About', about_path
       %li= link_to 'Contact', contact_path + '?slug=it-s-your-district', remote: true
       .clear

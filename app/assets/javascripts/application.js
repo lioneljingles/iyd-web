@@ -12,6 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-// require turbolinks
+//= require turbolinks
 //= require utils
-//= require main
+//= require menu
+//= require form
+//= require landing
+//= require org
+//= require opp

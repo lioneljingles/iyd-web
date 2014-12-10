@@ -5,6 +5,9 @@ header.landing {
   ul.nav li:first-child {
     margin-left: -20px;
   }
+  ul.nav li.donate {
+    display: none;
+  }
 }
 
 #action {
@@ -24,8 +27,11 @@ header.landing {
     margin-top: 10px;
     vertical-align: top;
   }
-  .register {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+  .btn {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    &.donate {
+      margin-left: 20px;
+    }
   }
 }
 
@@ -34,12 +40,16 @@ header.landing {
   width: 100%;
   background: $lightGray url(image_path('loading.gif')) no-repeat scroll center center;
   @include background-cover;
+  a.title:hover {
+      background-color: white;
+  }
   .title {
     position: absolute;
     left: 0;
+    top: 0;
     margin: 15px;
     padding: 10px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     .name {
       color: $textGray;
       text-transform: uppercase;
@@ -47,6 +57,7 @@ header.landing {
     .location {
       color: $darkGray;
       font-style: italic;
+      font-size: 0.9em;
     }
   }
   .tags {
@@ -74,71 +85,9 @@ p.none {
 
 .row {
   padding-top: 20px;
-  border-top: 2px solid $lightGray;
+  border-top: 1px solid $lightGray;
   &.top {
     border-top: none;
-  }
-}
-
-.tile {
-  &.loading {
-    .cover {
-      background-size: auto;
-    }
-    .title, .org-info p, .org-info a.btn {
-      display: none;
-    }
-  }
-  .btn.info {
-    margin-right: 20px;
-  }
-}
-
-.org-info {
-  min-height: 100px;
-  padding: 20px 0;
-  p {
-    margin: 0;
-    &.summary {
-      margin-bottom: 20px;
-    }
-  }
-  h3 {
-    margin-bottom: 20px;
-  }
-  ul {
-    li {
-      margin-bottom: 5px;
-    }
-  }
-}
-
-#controls {
-  .field {
-    display: inline-block;
-    position: relative;
-    width: 250px;
-    margin: 10px;
-    text-align: left;
-    &#search {
-      .icon {
-        padding-top: 6px;
-        background-color: $lightGray;
-      }
-    }
-    input, .select {
-      width: 100%;
-    }
-    .icon {
-      color: $gray;
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      bottom: 2px;
-      width: 40px;
-      cursor: pointer;
-      text-align: center;
-    }
   }
 }
 

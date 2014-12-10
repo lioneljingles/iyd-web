@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-IydWeb::Application.config.secret_key_base = '0fc8b3cffdc177bf01736abafefd6a98b3d0d855ea676c69375996f11dc137a359564a087214bcc3f8f4cfc40f266dfb3fe1f500201d757053d064185db29d5d'
+IydWeb::Application.config.secret_key_base = '##########'

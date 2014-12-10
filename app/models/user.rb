@@ -4,7 +4,7 @@ include Rails.application.routes.url_helpers
 
 class User < ActiveRecord::Base
   
-  has_one :organization
+  has_one :organization, dependent: :destroy
   validates :role, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, uniqueness: true, confirmation: true

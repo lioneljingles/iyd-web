@@ -1,0 +1,71 @@
+- content_for(:js) do
+  :javascript
+    App.errors = #{@errors.to_json}
+
+%h2
+  - if @opp.new_record?
+    Create Opportunity
+  - else
+    Edit Opportunity
+= form_tag @opp.new_record? ? opp_new_path(@org.slug) : opp_update_path(@org.slug, @opp.id),
+   method: (@opp.new_record? ? :post : :put) do
+  - if not @errors or @errors.empty?
+    %p 
+      Fields marked
+      %strong *
+      are required.
+  - else
+    %p.error There are problems with your registration form. Please fix the errors below and try again.
+
+  .form-row
+    %label 
+      Title
+      %strong *
+    = text_field :opp, :title, placeholder: 'Social Media Manager', value: @opp.title
+  .form-row
+    %label
+      Description
+      %strong *
+    = text_area :opp, :description, placeholder: 'We\'re looking for a volunteer to manage...',
+      value: @opp.description
+    .note A description of the opportunity.
+  .form-row
+    %label
+      Position type
+      %strong *
+    .radio-set
+      .radio
+        = radio_button :opp, :position, 0, checked: @opp.position == 0
+        %label Volunteer
+      .radio
+        = radio_button :opp, :position, 1, checked: @opp.position == 1
+        %label Intern
+      .radio
+        = radio_button :opp, :position, 2, checked: @opp.position == 2
+        %label Employee
+  .form-row
+    %label
+      Duration
+      %strong *
+    .radio-set
+      .radio
+        = radio_button :opp, :duration, :ongoing, checked: @opp.start_date.blank?
+        %label Ongoing
+      .radio
+        = radio_button :opp, :duration, :dates, checked: !@opp.start_date.blank?
+        %label Specific dates (fill in below)
+  #date-fields{class: @opp.start_date.blank? ? '' : 'open'}
+    .form-row
+      %label 
+        Start date
+      = text_field :opp, :start_date, placeholder: '1/23/2015', :'data-optional' => true, 
+        value: @opp.start_date.blank? ? nil : (@opp.start_date.to_s :human)
+    .form-row
+      %label End date
+      = text_field :opp, :end_date, placeholder: '3/21/2015', :'data-optional' => true,
+        value: @opp.end_date.blank? ? nil : (@opp.end_date.to_s :human)
+      .note Fill in the <b>end date</b> if the position is longer than 1 day.
+
+  = submit_tag "Save", class: [:btn, :'form-submit']
+
+

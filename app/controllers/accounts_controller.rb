@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
     @user = current_user
     @user.attributes = params.require(:user).permit(:name, :email)
     if @user.save()
-      redirect_to Rails.application.routes.url_helpers.root_path
+      redirect_to @user.organization.profile({updated_user: true}), status: 303
     else
       @errors = {}
       for field, message in @user.errors
@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
       @errors['user_current'] = 'incorrect password'
     end
     if @errors.empty? and @user.save()
-      redirect_to Rails.application.routes.url_helpers.root_path
+      redirect_to @user.organization.profile({updated_password: true}), status: 303
     else
       for field, message in @user.errors
         @errors['user_' + field.to_s] = message
@@ -60,7 +60,7 @@ class AccountsController < ApplicationController
       @user.update_password(params[:user][:password])
       if @user.save
         session[:user_id] = @user.id
-        redirect_to Rails.application.routes.url_helpers.root_path
+        redirect_to redirect_to @user.organization.profile({completed_reset: true}), status: 303
       else
         @errors = {}
         for field, message in @user.errors

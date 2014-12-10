@@ -11,11 +11,21 @@ IydWeb::Application.routes.draw do
   delete '/logout', to: 'sessions#destroy'  
   
   get '/org-list', to: 'organizations#list'
+  
   get '/org', to: 'organizations#new'
   post '/org', to: 'organizations#create'
   get '/org/:slug', to: 'organizations#show', as: :org_slug
   put '/org/:slug', to: 'organizations#update'
   get '/org/:slug/edit', to: 'organizations#edit', as: :org_edit
+  
+  get '/opportunities', to: 'opportunities#show'
+  get '/opp-list', to: 'opportunities#list'
+  
+  get '/org/:slug/opp', to: 'opportunities#new', as: :opp_new
+  post '/org/:slug/opp', to: 'opportunities#create'
+  get '/org/:slug/opp/:id/edit', to: 'opportunities#edit', as: :opp_edit
+  put '/org/:slug/opp/:id', to: 'opportunities#update', as: :opp_update
+  delete '/org/:slug/opp/:id', to: 'opportunities#destroy'
   
   get '/account/', to: 'accounts#edit'
   put '/account/', to: 'accounts#update'

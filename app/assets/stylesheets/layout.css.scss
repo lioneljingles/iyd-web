@@ -82,10 +82,15 @@ header {
       height: $headerHeight;
       margin-left: -20px;
       padding: 12px 20px 0 20px;
-      background: transparent url(image_path('logo-header-small.png')) no-repeat scroll center center;
+      background: transparent url(image_path('logo-header-01.png')) no-repeat scroll center center;
       background-size: 265px 50px;
       overflow: hidden;
       text-indent: -9999px;
+      
+      width: 90px;
+      background: transparent url(image_path('logo-header-02.png')) no-repeat scroll center center;
+      background-size: 50px 50px;
+      
     }
   }
   ul.nav {
@@ -103,6 +108,13 @@ header {
       float: right;
       &.left {
         float: left;
+      }
+      &.social {
+        color: white;
+        a {
+          width: $headerHeight;
+          padding-top: 5px;
+        }
       }
       &.login {
         margin-right: -20px;
@@ -135,23 +147,29 @@ header {
         color: gold;
         font-weight: bold;
       }
-      a {
-        height: $headerHeight;
-        line-height: $headerHeight;
-        padding: 0 15px;
-        font-size: 0.9em;
-        &:hover {
-          background-color: $textGray;
-        }
+    }
+    a {
+      height: $headerHeight;
+      line-height: $headerHeight;
+      padding: 0 15px;
+      font-size: 0.9em;
+      &:hover {
+        background-color: $textGray;
       }
     }
   }
   ul#user-menu {
-    display: none;
     position: absolute;
+    overflow: hidden;
     top: $headerHeight;
     right: 20px;
+    max-height: 0;
     background-color: $textGray;
+    @include transition(max-height 0.25s linear);
+    font-size: 0.9em;
+    &.open {
+      max-height: 300px;
+    }
     li {
       a {
         padding: 20px 20px;
@@ -241,6 +259,17 @@ blockquote {
   float: right;
 }
 
+.loading {
+  background: $lightGray url(image_path('loading.gif')) no-repeat scroll center center;
+}
+
+p.loading {
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+  border-radius: 100%;
+}
+
 /* MAIN CONTAINER AND GRID */
 
 #notice {
@@ -253,6 +282,14 @@ blockquote {
   max-width: $pageWidth;
   margin: 0 auto $pad auto;
   padding: 20px $pad ($pad + $footerHeight) $pad;
+  #banner {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 40px;
+    text-align: center;
+    background: $lightGray url(image_path('crowd.jpg')) no-repeat scroll center center;
+    @include background-cover;
+  }
 }
 
 [class*='col-'] {
@@ -286,3 +323,4 @@ blockquote {
 .col-1-8 {
   width: 12.5%;
 }
+

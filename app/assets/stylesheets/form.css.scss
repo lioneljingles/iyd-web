@@ -17,6 +17,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     border-color: $blue;
   }
   &.error {
+    color: inherit;
     border-color: $red;
   }
 }
@@ -150,4 +151,53 @@ label {
   text-align: center;
 }
 
+.radio-set {
+  display: inline-block;
+  padding-top: 7px;
+  input[type="radio"] {
+    margin-top: 5px;
+  }
+  label {
+    cursor: pointer;
+    height: 25px;
+    line-height: 25px;
+  }
+}
+
+#controls {
+  &.opportunities{
+    margin-bottom: 20px;
+  }
+  a.btn {
+    margin: -4px 0 0 10px;
+    min-width: 50px;
+    vertical-align: middle;
+  }
+  .field {
+    display: inline-block;
+    position: relative;
+    width: 240px;
+    margin: 10px;
+    text-align: left;
+    &#search {
+      .icon {
+        padding-top: 6px;
+        background-color: $lightGray;
+      }
+    }
+    input, .select {
+      width: 100%;
+    }
+    .icon {
+      color: $gray;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      bottom: 2px;
+      width: 40px;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+}
 

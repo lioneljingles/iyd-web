@@ -1,0 +1,60 @@
+%h1 Volunteer Opportunities
+
+#controls.center.opportunities
+  #district.field
+    .select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        All Districts
+      %ul.options
+        %li.none All Districts
+        - for i in (1..11)
+          %li{:'data-value' => i} District #{i.to_s}
+  #position.field
+    .select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        All Positions
+      %ul.options
+        %li.none All Positions
+        %li{:'data-value' => 0} Volunteer
+        %li{:'data-value' => 1} Intern
+        %li{:'data-value' => 2} Employee
+  #duration.field
+    .select
+      %i.fa.fa-lg.fa-caret-down
+      %i.fa.fa-lg.fa-caret-up
+      %span.current
+        All Durations
+      %ul.options
+        %li.none All Durations
+        %li{:'data-value' => 0} Ongoing
+        %li{:'data-value' => 1} One Day
+        %li{:'data-value' => 2} Multiple Days
+  %a.btn Reset
+  
+
+%ul#opportunities
+  %p.none.large.center
+    No results found.
+  %p.loading
+  %li.template
+    .cover
+      .title
+        = link_to '#' do
+          .name Org Name
+          .location Location
+    %h3 Title
+    %p.position
+      %b Position Type:
+      %span Type
+    %p.duration
+      %b Date(s):
+      %span 15-15-15
+    %p.description Description
+    
+    = link_to "Send Message", '#', remote: true, class: [:btn]
+
+

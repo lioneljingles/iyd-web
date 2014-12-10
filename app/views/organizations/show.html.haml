@@ -1,42 +1,80 @@
-- if @org_url
-  - content_for(:notice) do
-    %h2 Welcome to It's Your District!
-    %p 
-      If you have any questions, please
-      = link_to "contact us.", contact_path + '?slug=it-s-your-district', remote: true
-      
 - if @is_owner
   - content_for(:notice) do
     %p
-      You are the owner of this page. Click the button below to update your organization's information.
+      - if params.has_key?(:welcome)
+        %h2 Welcome to It's Your District!
+        %p
+          This is your organization's page! From here you can edit your organization's information as well as create, 
+          edit and delete opportunities for your organization.
+        %p 
+          If you have any questions, please
+          = link_to 'contact us.', contact_path + '?slug=it-s-your-district', remote: true
+      - elsif params.has_key?(:updated_organization)
+        You have updated your organization's information.
+      - elsif params.has_key?(:updated_user)
+        You have updated your user information.
+      - elsif params.has_key?(:updated_password)
+        You have updated your password.
+      - elsif params.has_key?(:completed_reset)
+        You have successfully reset your password.
+      - elsif params.has_key?(:created_opportunity)
+        You have created a new opportunity!
+      - elsif params.has_key?(:updated_opportunity)
+        You have updated an opportunity's information.
+      - elsif params.has_key?(:deleted_opportunity)
+        You have deleted an opportunity.
+      - else
+        You are the owner of this page. Click the button below to edit your organization's information.
     .center
       = link_to "Edit Details", org_edit_path(@org.slug), remote: true, class: :btn
 
 .cover.large{style: "background-image: url(#{@org.images.last.image.url});"}
   .title
     .name= @org.name
+    .location= raw @org.location
   .tags
     - @org.tags.each do |tag|
       = link_to tag.name, root_path + '#' + tag.name, class: 'tag'
 
 .org-info
-  .col-1-2
-    %h3 Information
-    %ul
-      %li= @org.location
-      %li= link_to @org.short_website, @org.website, target: '_blank'
-
-  .col-1-2
-    %h3 Contact
-    %ul
-      %li= @org.user.name
-      %li=mail_to @org.user.email
-
-  .clear.buffer
-
-  %h3 Mission
-  %p= @org.summary
+  %p.description= @org.summary
+  %ul.buffer
+    %p
+      %b Website:
+      = link_to @org.short_website, @org.website, target: '_blank'
+    %p
+      %b Contact:
+      = @org.user.name
+      &mdash;
+      = mail_to @org.user.email
+    %p
+      = link_to "Send Message", @org.contact, remote: true, class: [:btn]
   
-  .buffer
-  .center
-    = link_to "Contact", @org.contact, remote: true, class: :btn
+  %h2 Volunteer Opportunities
+  %ul.opportunities
+    - if @opps.empty?
+      %li None available.
+    - else
+      - @opps.each do |opp|
+        %li{class: opp.is_expired ? 'gray' : ''}
+          - if opp.is_expired
+            %h3.gray
+              = opp.title
+              (Expired)
+          - else
+            %h3= opp.title
+          %p
+            %b Position Type:
+            = opp.position_type
+          %p
+            %b Date(s):
+            = opp.duration
+          %p.description= raw opp.description
+          - if @is_owner
+            - unless opp.is_expired
+              = link_to "Edit", opp_edit_path(@org.slug, opp.id), remote: true, class: [:btn, :small]
+            = link_to "Delete", opp_update_path(@org.slug, opp.id), class: [:btn, :small],
+              method: :delete, :'data-confirm' => 'Are you sure you want to delete this opportunity?'
+    - if @is_owner
+      %li.add.center
+        = link_to "Add Opportunity", opp_new_path(@org.slug), remote: true, class: :btn

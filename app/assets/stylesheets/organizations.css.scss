@@ -1,0 +1,103 @@
+.tile {
+  &.loading {
+    .cover {
+      background-size: auto;
+    }
+    .title, .org-info p, .org-info a.btn {
+      display: none;
+    }
+  }
+  .btn.info {
+    margin-right: 20px;
+  }
+}
+
+.org-info {
+  min-height: 100px;
+  padding: 20px 0;
+  p {
+    margin-bottom: 10px;
+    &.summary {
+      margin-bottom: 20px;
+    }
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  .btn {
+    margin-top: 5px;
+  }
+}
+
+ul#opportunities, ul.opportunities {
+  li {
+    padding: 20px 0;
+    border-top: 1px solid $lightGray;
+    &:first-of-type {
+      border-top: none;
+    }
+    &.add {
+      background-color: $lightGray;
+    }
+    &.template {
+      display: none;
+    }
+    h3 {
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+ul#opportunities {
+  li {
+    position: relative;
+    padding-left: 220px;
+    min-height: 240px;
+    .cover {
+      display: table;
+      vertical-align: middle;
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 200px;
+      height: 200px;
+      .title {
+        position: static;
+        margin: 0;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        background-color: transparent;
+        a {
+          display: block;
+          padding: 10px 5px;
+          background-color: rgba(255, 255, 255, 0.9);
+          &:hover {
+            background-color: white;
+          }
+        }
+      }
+    }
+    a.btn {
+      margin-top: 20px;
+    }
+  }
+}
+
+#date-fields {
+  overflow: hidden;
+  max-height: 0;
+  @include transition(max-height 0.25s linear);
+  &.open {
+    max-height: 200px;
+  }
+}
+
+textarea#opportunity_description {
+  height: 200px;
+}
+
