@@ -18,11 +18,11 @@ IydWeb::Application.configure do
     
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
+    address: 'smtp.gmail.com',
     port: 587,
     domain: 'itsyourdistrict.org',
     user_name: 'info@itsyourdistrict.org',
-    password: '##########',
+    password: 'gr8BALLSofFIRE',
     authentication: 'plain',
     enable_starttls_auto: true
   }

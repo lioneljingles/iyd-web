@@ -17,3 +17,6 @@
 
 # Ignore Paperclip images
 /public/system/images/*
+
+# Ignore Mac hidden files
+.DS_Store
