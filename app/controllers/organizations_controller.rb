@@ -61,40 +61,43 @@ class OrganizationsController < ApplicationController
     
     @errors = {}
     
-    user = User.new(params.require(:user).permit(:email, :name, :password, :password_confirmation))
-    if not user.save()
-      for field, message in user.errors
-        @errors['user_' + field.to_s] = message.capitalize
+    begin
+      user = User.new(params.require(:user).permit(:email, :name, :password, :password_confirmation))
+      if not user.save()
+        for field, message in user.errors
+          @errors['user_' + field.to_s] = message.capitalize
+        end
+        raise 'User Save Error'
       end
-      return
-    end
     
-    image = Image.create!(params[:image].permit(:image))
-    if not image.save()
-      user.destroy
-      for field, message in user.errors
-        @errors['image_' + field.to_s] = message.capitalize
+      image = Image.create!(params[:image].permit(:image))
+      if not image.save()
+        user.destroy
+        for field, message in user.errors
+          @errors['image_' + field.to_s] = message.capitalize
+        end
+        raise 'Image Save Error'
       end
-      return
-    end
     
-    org = Organization.new(org_params)
-    org.user = user
-    org.images << image
-    org.tags = Tag.where(name: params.permit(tags: [])[:tags])
-    if org.save()
-      session[:user_id] = user.id
-      redirect_to org.profile({welcome: true}), status: 303
-    else
-      user.destroy
-      image.destroy
-      for field, message in org.errors
-        @errors['organization_' + field.to_s] = message.capitalize
+      org = Organization.new(org_params)
+      org.user = user
+      org.images << image
+      org.tags = Tag.where(name: params.permit(tags: [])[:tags])
+      if org.save()
+        session[:user_id] = user.id
+        redirect_to org.profile({welcome: true}), status: 303
+      else
+        user.destroy
+        image.destroy
+        for field, message in org.errors
+          @errors['organization_' + field.to_s] = message.capitalize
+        end
+        raise 'Organization Save Error'
       end
+    rescue
       @tags = Tag.all
       render '_new'
     end
-    
   end
   
   def edit

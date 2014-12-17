@@ -5,36 +5,7 @@ $ ->
   $userMenu = $('header ul#user-menu')
   
   
-  # OVERLAY
-  
-  $overlay.on 'click', (event) ->
-    $target = $(event.target)
-    if $target.hasClass('close')
-      $overlay.hide 'fast', ->
-        $target.find('.content').empty()
-    if $target.hasClass('tag')
-      if event.target.tagName.toLowerCase() != 'input'
-        $target.closest('.tag').find('input[type="checkbox"]').click()
-    if $target.hasClass('select-file')
-      $target.closest('.form-row').find('input[type="file"]').click()
-    if $target.is('.radio label')
-      $target.closest('.radio').find('input[type="radio"]').click()
-    if $target.is('input#opp_duration_dates')
-      $target.closest('form').find('#date-fields').addClass('open')
-    if $target.is('input#opp_duration_ongoing')
-      $target.closest('form').find('#date-fields').removeClass('open')
-    
-  $overlay.on 'change', 'form .form-row input[type="file"]', ->
-    filename = this.files[0].name
-    $row = $(this).closest('.form-row')
-    if (/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)
-      $row.find('span.file-name').text(this.files[0].name)
-      $row.find('a.select-file').text('(change...)')
-    else
-      alert('Invalid image file. Please select one of the following types of files: gif, jpg, jpeg, tiff, png')
-      $(this).replaceWith($(this).clone())
-      $row.find('span.file-name').text('')
-      $row.find('a.select-file').text('Select Image...')
+  # AJAX LINKS
 
   $('body').on 'click', 'a[data-remote="true"]', (event) ->
     $target = $(this)
@@ -51,9 +22,6 @@ $ ->
       alert(message)
       event.preventDefault()
       event.stopPropagation()
-  
-  
-  # AJAX LINKS
   
   $('body').on 'ajax:success', 'a[data-remote="true"], form[data-remote="true"]', (event, data, xhr) ->
     $target = $(event.target)

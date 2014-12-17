@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   has_one :organization, dependent: :destroy
   validates :role, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :password, presence: true, uniqueness: true, confirmation: true
-  validates :name, presence: true, uniqueness: true
+  validates :password, presence: true, confirmation: true
+  validates :name, presence: true
   serialize :settings, JSON
   
   before_validation :assign_defaults, on: :create

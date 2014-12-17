@@ -39,7 +39,6 @@ IydWeb::Application.routes.draw do
   get '/admin/impersonate/:id', to: 'admin#impersonate', as: :admin_impersonate
   
   match '/404', to: 'root#missing', via: :all
-  match '/422', to: 'root#error', via: :all
   match '/500', to: 'root#error', via: :all
   
 end
