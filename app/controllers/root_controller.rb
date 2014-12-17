@@ -18,7 +18,7 @@ class RootController < ApplicationController
   end
   
   def sent
-    UserMailer.contact(params[:email], params[:message], params[:slug])
+    UserMailer.contact(params[:email], params[:message], params[:slug]).deliver
     render partial: 'sent'
   end
   
@@ -26,6 +26,9 @@ class RootController < ApplicationController
   end
   
   def missing
+  end
+  
+  def error
   end
   
 end

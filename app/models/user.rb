@@ -36,12 +36,13 @@ class User < ActiveRecord::Base
   
   def update_password(password)
     self.password = BCrypt::Password.create(password)
+    self.reset_token = nil
   end
     
   def send_reset
     self.reset_token = SecureRandom.uuid()
     if self.save
-      UserMailer.reset_instructions(self.id)
+      UserMailer.reset_instructions(self.id).deliver
     end
   end
   
@@ -51,17 +52,13 @@ class User < ActiveRecord::Base
 
   private
   
-  def assign_defaults
-    
-    # TODO: Remove if unnecessary!
-    self.reset_token = SecureRandom.uuid()
-    
+  def assign_defaults    
     self.role = User::Role::USER
     self.password = BCrypt::Password.create(self.password)
   end
   
   def send_welcome
-    UserMailer.welcome(self.id)
+    UserMailer.welcome(self.id).deliver
   end
   
 end

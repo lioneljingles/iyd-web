@@ -1,0 +1,7 @@
+%h2 Error: Five Hundred
+%p.buffer 
+  We're sorry, something has gone wrong on our servers. Please contact us directly at 
+  = mail_to 'info@itsyourdistrict.org'
+  or use the button below to send us a message.
+= link_to 'Contact Support', contact_path + '?slug=it-s-your-district&message=I am having a problem with:', class:'btn', remote: true
+

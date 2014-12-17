@@ -27,4 +27,10 @@ IydWeb::Application.configure do
     enable_starttls_auto: true
   }
   
+  IydWeb::Application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :sender_address => %{"Exemption Notifier" <info@itsyourdistrict.org>},
+      :exception_recipients => %w{mrjingles@gmail.com}
+    }
+  
 end

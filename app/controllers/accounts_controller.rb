@@ -53,14 +53,15 @@ class AccountsController < ApplicationController
   end
   
   def complete_reset
-    @user = User.find_by_reset_token(params[:token])
-    if @user.nil?
+    token = params[:token]
+    @user = User.find_by_reset_token(params[:token])    
+    if token.blank? or @user.nil?
       render 'invalid_token'
     else
       @user.update_password(params[:user][:password])
       if @user.save
         session[:user_id] = @user.id
-        redirect_to redirect_to @user.organization.profile({completed_reset: true}), status: 303
+        redirect_to @user.organization.profile({completed_reset: true}), status: 303
       else
         @errors = {}
         for field, message in @user.errors

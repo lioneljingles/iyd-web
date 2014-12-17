@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.1.1'
 gem 'pg'
-gem 'resque'
 gem 'haml'
 gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.3'
@@ -15,5 +14,9 @@ gem 'turbolinks'
 gem 'paperclip'
 gem 'bcrypt'
 gem 'american_date'
+gem 'exception_notification'
+
+gem 'resque'
+gem 'resque_mailer'
 
 # gem 'capistrano'

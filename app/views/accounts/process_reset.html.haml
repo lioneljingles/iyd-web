@@ -3,7 +3,7 @@
     App.errors = #{@errors.to_json}
 
 %h2 Update Password
-%p Please enter a new password for your account.
+%p.buffer Please enter a new password for your account.
 
 = form_tag '', method: :put do
   - if @errors and not @errors.empty?
